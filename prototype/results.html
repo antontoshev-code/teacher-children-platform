@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Предложения за вас – Слънчев мост</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main" class="wrap">
+  <ol class="progress" aria-label="Стъпки"><li><a href="questionnaire.html">1. Въпросник</a></li><li aria-current="step">2. Предложения</li><li>3. Заявка</li></ol>
+  <h1 id="h">Педагози за вас</h1>
+  <div id="sum"></div>
+  <div class="tri" role="group" aria-label="Покажи" style="max-width:520px">
+    <button type="button" data-f="all" aria-pressed="true">Всички</button>
+    <button type="button" data-f="yes" aria-pressed="false">Да</button>
+    <button type="button" data-f="maybe" aria-pressed="false">Може би</button>
+    <button type="button" data-f="no" aria-pressed="false">Не</button>
+  </div>
+  <div id="list" class="grid"></div>
+  <div class="notice" style="margin-top:1.5rem"><strong>Как да четете процентите:</strong> те показват колко добре профилът пасва на отговорите ви. Не са оценка на педагога и не гарантират, че ще е подходящ. Затова започнете с пробен урок.</div>
+  <details class="faq"><summary>Защо не виждам други педагози?</summary><div id="dropped"></div></details>
+  <div class="next btn-row">
+    <a class="btn alt" href="questionnaire.html">Променете отговорите</a>
+  </div>
+</main>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script>
+let qd=null;try{qd=JSON.parse(sessionStorage.getItem("q"));}catch(e){}
+if(!qd){ // демонстрация без въпросник
+  qd={city:"Благоевград",subject:"bg",cls:2,need:"down",format:"any",budget:25,times:["wda"],support:["visual"]};
+  sum.innerHTML='<p class="notice">Показан е пример: български език, 2. клас, синдром на Даун, всякакъв формат, Благоевград, делнични следобеди. <a href="questionnaire.html">Попълнете вашия въпросник</a>.</p>';
+}
+const r=runMatch(qd), n=r.top.length;
+sum.innerHTML+=`<p>${qd.city} · ${SUBJECTS[qd.subject]} · ${classLabel(qd.cls)} · до ${qd.budget} € на час. От ${TEACHERS.length} педагози ${n?`<strong>${r.kept.length}</strong> са подходящи по основните условия.`:"няма подходящи по основните условия."}</p>`;
+if(!n) list.innerHTML='<div class="card"><h2>Все още няма точно съвпадение</h2><p>Опитайте с повече удобни часове или с избор „Все едно“ за формата. Можете и да разгледате целия каталог, а екипът може да ви помогне ръчно.</p></div>';
+else if(n<3) sum.innerHTML+=`<p class="notice">Намерихме само ${n} ${n==1?"педагог":"педагози"}. Не показваме неподходящи, за да допълним списъка.</p>`;
+let mark={};try{mark=JSON.parse(sessionStorage.getItem("mark")||"{}");}catch(e){}
+let filter="all";
+function draw(){
+  list.innerHTML="";
+  const shown=r.top.slice(0,5).filter(m=>filter==="all"||mark[m.t.id]===filter);
+  if(!shown.length&&n){list.innerHTML='<div class="card"><p>Няма педагози в този списък. Отбележете „Да“, „Може би“ или „Не“ под всеки педагог.</p></div>';}
+  shown.forEach(m=>{
+    const chips=m.chips.map(c=>`<span class="chip ${c.ok?"ok":"miss"}">${c.t}${c.ok?"":' <span class="sr">(не е посочено)</span>'}</span>`).join("");
+    const why=`<details class="faq" style="margin:.6rem 0"><summary>Защо го предлагаме</summary><div class="why"><ul>${m.reasons.map(x=>`<li>${x}</li>`).join("")}</ul></div></details>`;
+    const top=`<div class="matchnum" aria-label="Съвпадение ${m.pct} процента">${m.pct}%<small> съвпадение</small></div><div class="mbar" aria-hidden="true"><i style="width:${m.pct}%"></i></div><p style="margin-top:.6rem">${chips}</p>`;
+    const tri=`<div class="tri" role="group" aria-label="Отбелязване на ${m.t.name}">${[["yes","Да"],["maybe","Може би"],["no","Не"]].map(([k,l])=>`<button type="button" data-id="${m.t.id}" data-v="${k}" aria-pressed="${mark[m.t.id]===k}">${l}</button>`).join("")}</div>`;
+    list.insertAdjacentHTML("beforeend",teacherCard(m.t,top+why+tri+`<p><a class="btn" href="contact.html?id=${m.t.id}">Изпрати заявка за пробен урок</a> <a class="btn alt" href="teacher.html?id=${m.t.id}">Виж профила</a></p>`));
+  });
+}
+list.addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(!b)return;const id=b.dataset.id;mark[id]=mark[id]===b.dataset.v?undefined:b.dataset.v;try{sessionStorage.setItem("mark",JSON.stringify(mark));}catch(x){}draw();const again=list.querySelector(`button[data-id="${id}"][data-v="${b.dataset.v}"]`);if(again)again.focus();});
+document.querySelectorAll(".tri[aria-label=Покажи] button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll(".tri[aria-label=Покажи] button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
+draw();
+dropped.innerHTML=r.dropped.length?"<ul>"+r.dropped.map(d=>`<li>${d.t.name}: ${d.why}.</li>`).join("")+"</ul>":"<p>Няма отпаднали.</p>";
+</script>
+</body>
+</html>
