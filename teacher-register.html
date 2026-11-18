@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Регистрация за педагози – Слънчев мост</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main" class="wrap">
+  <div id="form-view">
+    <h1>Регистрация за педагози</h1>
+    <p>Създайте профил, за да получавате заявки от семейства. Профилът се проверява от екипа, преди да стане видим.</p>
+    <div class="grid c2" style="margin-bottom:1.5rem">
+      <div class="card"><h2>Месечен абонамент</h2><p class="price">[сума] € на месец</p><p>Сумата ще се определи с фондацията. Първият месец може да е безплатен. Отказвате се по всяко време.</p></div>
+      <div class="card"><h2>Какво получавате</h2><ul><li>Профил, видим за семействата</li><li>Заявки за пробни уроци</li><li>Отзиви от родители</li></ul></div>
+    </div>
+    <form id="r" novalidate>
+      <div id="errsum" class="notice" role="alert" tabindex="-1" hidden></div>
+      <fieldset><legend>1. За вас</legend>
+        <div class="field"><label for="nm">Име</label><input id="nm" type="text" autocomplete="name"></div>
+        <div class="field"><label for="em">Имейл</label><input id="em" type="email" autocomplete="email"></div>
+        <div class="field"><label for="city">Град</label><select id="city"></select></div>
+        <div class="field"><label for="bio">Кратко представяне</label><p class="hint">Две-три изречения как работите с децата.</p><textarea id="bio"></textarea></div>
+      </fieldset>
+      <fieldset><legend>2. Какво преподавате</legend>
+        <p class="hint">Изберете предметите.</p><div class="opts" id="subj"></div>
+        <div class="field" style="margin-top:1rem"><label for="from">От кой клас</label><select id="from"></select></div>
+        <div class="field"><label for="to">До кой клас</label><select id="to"></select></div>
+      </fieldset>
+      <fieldset><legend>3. Опит с деца</legend>
+        <div class="field"><label for="xa">Години опит с деца с аутизъм</label><input id="xa" type="number" min="0" max="40" value="0"></div>
+        <div class="field"><label for="xd">Години опит с деца със синдром на Даун</label><input id="xd" type="number" min="0" max="40" value="0"></div>
+        <div class="field"><label for="tr">Обучения и квалификация</label><textarea id="tr"></textarea></div>
+        <div class="field"><label for="doc">Документ за квалификация (по желание)</label><input id="doc" type="file" accept=".pdf,.jpg,.png"><p class="hint">Виждат го само администраторите.</p></div>
+      </fieldset>
+      <fieldset><legend>4. Формат, цена и часове</legend>
+        <div class="opts" id="fmt"></div>
+        <div class="field" style="margin-top:1rem"><label for="pr">Цена на час (€)</label><input id="pr" type="number" min="5" max="100"></div>
+        <p class="hint">Свободни часове:</p><div class="opts" id="tm"></div>
+      </fieldset>
+      <fieldset><legend>5. Правила на платформата</legend>
+        <label class="opt"><input type="checkbox" id="r1"> Предлагам първия урок като пробен (най-малко 30 минути, безплатно или с отстъпка, описвам какво включва).</label>
+        <label class="opt" style="margin-top:.5rem"><input type="checkbox" id="r2"> Отговарям на заявките до 48 часа. При по-дълго мълчание профилът ми се скрива, докато отговоря.</label>
+        <label class="opt" style="margin-top:.5rem"><input type="checkbox" id="r3"> Не пиша телефон, имейл или адрес в профила и съобщенията си. Контактът се споделя само след приета заявка.</label>
+        <p class="hint">Значка „Проверен профил“ получавате, след като екипът види квалификацията ви и имате поне 4 препоръки и 1 отзив (стойностите са предложение за обсъждане).</p>
+      </fieldset>
+      <fieldset><legend>6. Съгласие</legend>
+        <label class="opt"><input type="checkbox" id="cons"> Съгласен/на съм профилът ми да бъде показван на семейства и приемам <a href="terms.html">условията за ползване</a>.</label>
+        <p class="hint">Записваме датата и часа. Профилът и данните ви могат да бъдат изтрити по ваше искане.</p>
+      </fieldset>
+      <button class="btn yellow" type="submit">Изпрати профила за проверка</button>
+    </form>
+  </div>
+  <div id="done" hidden>
+    <h1>Профилът е изпратен за проверка</h1>
+    <div class="notice" role="status"><p>Екипът ще прегледа профила ви. Ще получите имейл, когато е одобрен, и ще можете да активирате абонамента.</p></div>
+    <p class="hint">В прототипа нищо не е изпратено наистина.</p>
+    <div class="next btn-row"><a class="btn yellow" href="teacher.html?id=1">Вижте пример за готов профил</a><a class="btn alt" href="index.html">Към началото</a></div>
+  </div>
+</main>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script>
+city.innerHTML='<option value="">Изберете град</option>'+CITIES.map(c=>`<option>${c}</option>`).join("");
+subj.innerHTML=Object.entries(SUBJECTS).map(([k,v])=>`<label class="opt"><input type="checkbox" name="s" value="${k}"> ${v}</label>`).join("");
+const cl=[0,1,2,3,4,5,6,7,8,9,10,11,12].map(c=>`<option value="${c}">${classLabel(c)}</option>`).join("");
+from.innerHTML=cl;to.innerHTML=cl;to.value=7;
+fmt.innerHTML=Object.entries(FORMATS).map(([k,v])=>`<label class="opt"><input type="checkbox" name="f" value="${k}"> ${v}</label>`).join("");
+tm.innerHTML=Object.entries(TIMES).map(([k,v])=>`<label class="opt"><input type="checkbox" name="t" value="${k}"> ${v}</label>`).join("");
+r.addEventListener("submit",e=>{
+  e.preventDefault();const errs=[];
+  if(!nm.value.trim())errs.push(["nm","Напишете име."]);
+  if(!/^\S+@\S+\.\S+$/.test(em.value))errs.push(["em","Напишете имейл, например ime@primer.bg."]);
+  if(!city.value)errs.push(["city","Изберете град."]);
+  if(!document.querySelector("[name=s]:checked"))errs.push(["subj","Изберете поне един предмет."]);
+  if(!document.querySelector("[name=t]:checked"))errs.push(["tm","Изберете поне един свободен час."]);
+  if(!r1.checked||!r2.checked||!r3.checked)errs.push(["r1","Потвърдете трите правила на платформата."]);
+  if(!cons.checked)errs.push(["cons","Нужно е съгласие."]);
+  const box=document.getElementById("errsum");
+  if(errs.length){box.hidden=false;box.innerHTML="<strong>Моля, поправете:</strong><ul>"+errs.map(([i,m])=>`<li><a href="#${i}">${m}</a></li>`).join("")+"</ul>";box.focus();return;}
+  document.getElementById("form-view").hidden=true;done.hidden=false;window.scrollTo(0,0);
+});
+</script>
+</body>
+</html>
