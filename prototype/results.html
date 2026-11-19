@@ -3,57 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Предложения за вас – Sientica Nest</title>
+<title>Намери педагог – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <main id="main" class="wrap">
-  <ol class="progress" aria-label="Стъпки"><li><a href="questionnaire.html">1. Въпросник</a></li><li aria-current="step">2. Предложения</li><li>3. Заявка</li></ol>
-  <h1 id="h">Педагози за вас</h1>
-  <div id="sum"></div>
-  <div class="tri" role="group" aria-label="Покажи" style="max-width:520px">
-    <button type="button" data-f="all" aria-pressed="true">Всички</button>
-    <button type="button" data-f="yes" aria-pressed="false">Да</button>
-    <button type="button" data-f="maybe" aria-pressed="false">Може би</button>
-    <button type="button" data-f="no" aria-pressed="false">Не</button>
+  <h1>Намери педагог</h1>
+  <p id="intro">Разгледайте всички педагози. Филтрирайте по предмет, град, формат, цена, клас, потребност и часове.</p>
+
+  <div id="parent_note" class="notice demo" hidden></div>
+  <div id="visitor_note" class="notice demo" hidden>
+    <p style="margin:0">С регистрация виждате процент на съвпадение за всеки педагог и общите интереси. <a href="signup-family.html">Регистрация за семейства</a></p>
   </div>
-  <div id="list" class="grid"></div>
-  <div class="notice" style="margin-top:1.5rem"><strong>Как да четете процентите:</strong> те показват колко добре профилът пасва на отговорите ви. Не са оценка на педагога и не гарантират, че ще е подходящ. Затова започнете с пробен урок.</div>
-  <details class="faq"><summary>Защо не виждам други педагози?</summary><div id="dropped"></div></details>
-  <div class="next btn-row">
-    <a class="btn alt" href="questionnaire.html">Променете отговорите</a>
-  </div>
+
+  <form class="card white" id="search" role="search" aria-label="Търсене на педагози" onsubmit="return false">
+    <div class="search">
+      <div class="field"><label for="s_subject">Предмет</label><select id="s_subject"></select></div>
+      <div class="field"><label for="s_city">Град</label><select id="s_city"></select></div>
+      <div><button class="btn" type="button" id="s_go">Търси</button></div>
+    </div>
+    <div class="filters">
+      <div class="field"><label for="f_format">Формат</label><select id="f_format"><option value="">Всички</option><option value="presential">Присъствено</option><option value="online">Онлайн</option></select></div>
+      <div class="field"><label for="f_price">Цена до (€ на час)</label><input id="f_price" type="number" min="5" max="100" placeholder="напр. 25"></div>
+      <div class="field"><label for="f_cls">Клас</label><select id="f_cls"></select></div>
+      <div class="field"><label for="f_need">Опит с</label><select id="f_need"><option value="">Всички</option><option value="autism">Аутизъм (РАС)</option><option value="down">Синдром на Даун</option></select></div>
+      <div class="field"><label for="f_time">Удобен час</label><select id="f_time"></select></div>
+      <div class="field"><label for="f_sort">Подреди по</label><select id="f_sort"></select></div>
+      <div class="field"><button class="btn alt" type="button" id="reset">Изчисти</button></div>
+    </div>
+  </form>
+
+  <p class="countline" id="count" aria-live="polite"></p>
+  <div id="out" class="catgrid"></div>
+  <div class="next" style="margin-top:2rem"><p class="muted">Не сте сигурни? Пробният урок е безплатен и първият урок е пробен.</p></div>
 </main>
 <script src="js/data.js"></script>
 <script src="js/layout.js"></script>
 <script>
-let qd=null;try{qd=JSON.parse(sessionStorage.getItem("q"));}catch(e){}
-if(!qd){ // демонстрация без въпросник
-  qd={city:"Благоевград",subject:"bg",cls:2,need:"down",format:"any",budget:25,times:["wda"],support:["visual"]};
-  sum.innerHTML='<p class="notice">Показан е пример: български език, 2. клас, синдром на Даун, всякакъв формат, Благоевград, делнични следобеди. <a href="questionnaire.html">Попълнете вашия въпросник</a>.</p>';
+const params=new URLSearchParams(location.search);
+const parentQ=(role()==="parent")?qData():null;
+s_subject.innerHTML='<option value="">Всички предмети</option>'+Object.entries(SUBJECTS).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+s_city.innerHTML='<option value="">Всички градове</option>'+CITIES.map(c=>`<option>${esc(c)}</option>`).join("");
+f_cls.innerHTML='<option value="">Всички класове</option>'+[0,1,2,3,4,5,6,7,8,9,10,11,12].map(c=>`<option value="${c}">${classLabel(c)}</option>`).join("");
+f_time.innerHTML='<option value="">По всяко време</option>'+Object.entries(TIMES).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+f_sort.innerHTML=(parentQ?'<option value="match">По съвпадение</option>':'')+'<option value="rating">По оценка</option><option value="price">По цена</option>';
+if(params.get("subject")&&SUBJECTS[params.get("subject")]) s_subject.value=params.get("subject");
+if(params.get("city")&&CITIES.includes(params.get("city"))) s_city.value=params.get("city");
+if(parentQ){
+  parent_note.hidden=false;
+  parent_note.innerHTML='<p style="margin:0">Показваме съвпадението с вашите отговори. Промените в търсенето се виждат веднага. <a href="signup-family.html">Промяна на отговорите</a></p>';
+  f_sort.value="match";
+}else{ visitor_note.hidden=false; f_sort.value="rating"; }
+
+function list(){
+  const sub=s_subject.value, city=s_city.value, fmt=f_format.value, price=f_price.value, cls=f_cls.value, need=f_need.value, time=f_time.value;
+  let L;
+  if(parentQ){
+    const q={...parentQ,subject:sub||parentQ.subject};
+    L=runMatch(q).kept.map(m=>({t:m.t,pct:m.pct,q}));
+  }else{
+    L=TEACHERS.map(t=>({t}));
+  }
+  L=L.filter(({t})=>(!sub||t.subjects.includes(sub))&&(!city||t.city===city)&&(!fmt||t.formats.includes(fmt))&&(!price||t.price<=+price)&&(cls===""||(+cls>=t.ageFrom&&+cls<=t.ageTo))&&(!need||t.exp[need]>0)&&(!time||t.times.includes(time)));
+  const by={match:(a,b)=>(b.pct||0)-(a.pct||0),rating:(a,b)=>b.t.rating-a.t.rating||b.t.reviews-a.t.reviews,price:(a,b)=>a.t.price-b.t.price};
+  L.sort(by[f_sort.value]||by.rating);
+  return L;
 }
-const r=runMatch(qd), n=r.top.length;
-sum.innerHTML+=`<p>${esc(qd.city)} · ${SUBJECTS[qd.subject]} · ${classLabel(qd.cls)} · до ${esc(String(qd.budget))} € на час. От ${TEACHERS.length} педагози ${n?`<strong>${r.kept.length}</strong> са подходящи по основните условия.`:"няма подходящи по основните условия."}</p>`;
-if(!n) list.innerHTML='<div class="card"><h2>Все още няма точно съвпадение</h2><p>Опитайте с повече удобни часове или с избор „Все едно“ за формата. Можете и да разгледате целия каталог, а екипът може да ви помогне ръчно.</p></div>';
-else if(n<3) sum.innerHTML+=`<p class="notice">Намерихме само ${n} ${n==1?"педагог":"педагози"}. Не показваме неподходящи, за да допълним списъка.</p>`;
-let mark={};try{mark=JSON.parse(sessionStorage.getItem("mark")||"{}");}catch(e){}
-let filter="all";
 function draw(){
-  list.innerHTML="";
-  const shown=r.top.slice(0,5).filter(m=>filter==="all"||mark[m.t.id]===filter);
-  if(!shown.length&&n){list.innerHTML='<div class="card"><p>Няма педагози в този списък. Отбележете „Да“, „Може би“ или „Не“ под всеки педагог.</p></div>';}
-  shown.forEach(m=>{
-    const chips=m.chips.map(c=>`<span class="chip ${c.ok?"ok":"miss"}">${c.t}${c.ok?"":' <span class="sr">(не е посочено)</span>'}</span>`).join("");
-    const why=`<details class="faq" style="margin:.6rem 0"><summary>Защо го предлагаме</summary><div class="why"><ul>${m.reasons.map(x=>`<li>${x}</li>`).join("")}</ul></div></details>`;
-    const top=`<div class="matchnum" aria-label="Съвпадение ${m.pct} процента">${m.pct}%<small> съвпадение</small></div><div class="mbar" aria-hidden="true"><i style="width:${m.pct}%"></i></div><p style="margin-top:.6rem">${chips}</p>`;
-    const tri=`<div class="tri" role="group" aria-label="Отбелязване на ${m.t.name}">${[["yes","Да"],["maybe","Може би"],["no","Не"]].map(([k,l])=>`<button type="button" data-id="${m.t.id}" data-v="${k}" aria-pressed="${mark[m.t.id]===k}">${l}</button>`).join("")}</div>`;
-    list.insertAdjacentHTML("beforeend",teacherCard(m.t,top+why+tri+`<p><a class="btn" href="contact.html?id=${m.t.id}">Изпрати заявка за пробен урок</a> <a class="btn alt" href="teacher.html?id=${m.t.id}">Виж профила</a></p>`));
-  });
+  const L=list();
+  count.textContent=L.length?`Намерени педагози: ${L.length} от ${TEACHERS.length}`:"Няма педагози с тези филтри";
+  out.innerHTML=L.length?L.map(({t,q})=>teacherCard(t,{q:q||null})).join(""):'<div class="card"><p>Няма педагози с тези филтри. Опитайте с по-малко филтри или с онлайн формат.</p><p><button class="btn alt" type="button" onclick="reset.click()">Изчисти филтрите</button></p></div>';
 }
-list.addEventListener("click",e=>{const b=e.target.closest("button[data-id]");if(!b)return;const id=b.dataset.id;mark[id]=mark[id]===b.dataset.v?undefined:b.dataset.v;try{sessionStorage.setItem("mark",JSON.stringify(mark));}catch(x){}draw();const again=list.querySelector(`button[data-id="${id}"][data-v="${b.dataset.v}"]`);if(again)again.focus();});
-document.querySelectorAll(".tri[aria-label=Покажи] button").forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll(".tri[aria-label=Покажи] button").forEach(x=>x.setAttribute("aria-pressed",x===b));draw();});
+document.getElementById("search").addEventListener("input",draw);
+document.getElementById("search").addEventListener("change",draw);
+s_go.onclick=draw;
+reset.onclick=()=>{s_subject.value="";s_city.value="";f_format.value="";f_price.value="";f_cls.value="";f_need.value="";f_time.value="";f_sort.value=parentQ?"match":"rating";draw();};
 draw();
-dropped.innerHTML=r.dropped.length?"<ul>"+r.dropped.map(d=>`<li>${d.t.name}: ${d.why}.</li>`).join("")+"</ul>":"<p>Няма отпаднали.</p>";
 </script>
 </body>
 </html>

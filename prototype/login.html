@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вход – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main" class="wrap narrow">
+  <h1>Вход</h1>
+  <div class="notice demo"><strong>Демо, не въвеждайте истински данни.</strong> Входът не проверява парола и нищо не се изпраща.</div>
+
+  <section class="card white" aria-labelledby="ex-h" style="margin-bottom:1.4rem">
+    <h2 id="ex-h" style="font-size:1.25rem">Бързо разглеждане с пример</h2>
+    <p>Изберете един от примерните профили. Ще видите същия сайт както родителят или педагогът.</p>
+    <div class="btn-row">
+      <button type="button" class="btn" id="as-parent">Влез като родител (пример)</button>
+      <button type="button" class="btn alt" id="as-teacher">Влез като педагог (пример)</button>
+    </div>
+  </section>
+
+  <form class="card white" id="f" novalidate aria-labelledby="form-h">
+    <h2 id="form-h" style="font-size:1.25rem">Или с имейл и парола</h2>
+    <div id="errsum" class="notice" role="alert" tabindex="-1" hidden></div>
+    <div class="field"><label for="em">Имейл</label><input id="em" type="email" autocomplete="username"></div>
+    <div class="field"><label for="pw">Парола</label><input id="pw" type="password" autocomplete="current-password"></div>
+    <p class="hint">Ако имейлът съдържа „педагог“, влизате като педагог. Във всички други случаи – като родител.</p>
+    <button class="btn" type="submit">Влез</button>
+  </form>
+  <p class="next">Още нямате профил? <a href="signup-family.html">Регистрация за семейства</a> или <a href="teacher-register.html">регистрация за педагози</a>.</p>
+</main>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script>
+function go(r){SS.set("sn_role",r);location.href=r==="teacher"?"teacher-dashboard.html":"results.html";}
+$=id=>document.getElementById(id);
+$("as-parent").onclick=()=>{SS.set("sn_q",SS.get("sn_q",null)||{city:"Благоевград",subject:"math",cls:4,need:"autism",format:"presential",budget:25,times:["wde"],support:["visual"],interests:["пъзели","природа и разходки"],name:"Пример"});go("parent");};
+$("as-teacher").onclick=()=>go("teacher");
+$("f").addEventListener("submit",e=>{
+  e.preventDefault();const errs=[];
+  if(!/^\S+@\S+\.\S+$/.test($("em").value))errs.push(["em","Погледнете имейла: изглежда непълен."]);
+  if(!$("pw").value)errs.push(["pw","Попълнете паролата (демо: всяка стойност)."]);
+  if(errs.length){const b=$("errsum");b.hidden=false;b.innerHTML="<strong>Погледнете тези полета</strong><ul>"+errs.map(([i,m])=>`<li><a href="#${i}">${esc(m)}</a></li>`).join("")+"</ul>";b.focus();return;}
+  if(!SS.get("sn_q",null)) SS.set("sn_q",{city:"Благоевград",subject:"math",cls:4,need:"autism",format:"presential",budget:25,times:["wde"],support:[],interests:[],name:"Пример"});
+  go($("em").value.toLowerCase().includes("педагог")?"teacher":"parent");
+});
+</script>
+</body>
+</html>

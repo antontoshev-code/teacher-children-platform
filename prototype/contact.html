@@ -4,63 +4,78 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Заявка за пробен урок – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<main id="main" class="wrap">
-  <ol class="progress" id="prog" aria-label="Стъпки" hidden><li><a href="questionnaire.html">1. Въпросник</a></li><li><a href="results.html">2. Предложения</a></li><li aria-current="step">3. Заявка</li></ol>
-  <p class="crumbs" id="crumb"><a href="results.html">← Назад към предложенията</a></p>
-  <div id="form-view">
-    <h1>Заявка за пробен урок</h1>
+<main id="main" class="wrap narrow">
+  <p class="crumbs"><a href="index.html">Начало</a> › <a href="results.html">Намери педагог</a> › Заявка</p>
+  <div id="gate" hidden>
+    <h1>Заявката изисква профил</h1>
+    <p>Заявка за пробен урок изпраща семейството. За да я изпратите, влезте в профила си или се регистрирайте.</p>
+    <div class="btn-row"><a class="btn" href="signup-family.html">Регистрация</a><a class="btn alt" href="login.html">Вход</a></div>
+  </div>
+  <div id="teacher-gate" hidden>
+    <h1>Заявката се изпраща от семейството</h1>
+    <p>Като педагог получавате заявките в таблото си. Тук можете да видите профила си или да отворите съобщенията.</p>
+    <div class="btn-row"><a class="btn" href="teacher-dashboard.html">Към таблото</a></div>
+  </div>
+
+  <div id="form-wrap" hidden>
+    <h1 id="title">Заявка за пробен урок</h1>
     <p id="to"></p>
     <form id="c" novalidate>
       <div id="errsum" class="notice" role="alert" tabindex="-1" hidden></div>
-      <div class="field"><label for="nm">Вашето име</label><input id="nm" type="text" autocomplete="name"></div>
-      <div class="field"><label for="em">Имейл за отговор</label><p class="hint">Педагогът няма да види имейла ви, докато не отговорите.</p><input id="em" type="email" autocomplete="email"></div>
-      <div class="field"><label for="pref">Предпочитан ден и час (с думи, без календар)</label><p class="hint" id="pref-h">Например: вторник след 17:00. Педагогът потвърждава с имейл.</p><input id="pref" type="text" aria-describedby="pref-h"></div>
-      <div class="field"><label for="msg">Съобщение (по желание)</label><p class="hint">Например кога ви е удобно или какво е важно за детето.</p><textarea id="msg"></textarea></div>
 
-      <div class="notice privacy"><h2 style="font-size:1.2rem">Споделяне на информация за детето</h2>
-        <p>Ако изпратите заявката, <strong id="who">педагогът</strong> ще види: клас, предмет, вид потребност (<span id="needtxt">не е посочена</span>) и удобни часове. Нищо друго.</p>
-        <label class="opt" style="border-color:#7a5c00"><input type="checkbox" id="cons"> Съгласен/на съм да споделя тази информация само с този педагог.</label>
-        <p class="hint" style="margin-top:.6rem">Записваме датата и часа на съгласието. Можете да го оттеглите по всяко време от профила си.</p>
+      <fieldset><legend>Кога ви е удобно</legend>
+        <p class="hint">Изберете дата и час. Педагогът потвърждава с имейл.</p>
+        <div class="field"><label for="d1">Първа дата</label><input id="d1" type="date"></div>
+        <div class="field"><label for="t1">Първи час</label><input id="t1" type="time" step="1800"></div>
+        <div class="field"><label for="d2">Втора дата (по желание)</label><input id="d2" type="date"></div>
+        <div class="field"><label for="t2">Втори час (по желание)</label><input id="t2" type="time" step="1800"></div>
+      </fieldset>
+
+      <div class="field"><label for="msg">Съобщение (по желание)</label><p class="hint">Например какво е важно за детето или какво искате да направите на първия урок.</p><textarea id="msg"></textarea></div>
+
+      <div class="notice privacy">
+        <label class="opt"><input type="checkbox" id="cons"> Съгласен/на съм да споделя информацията за детето (клас, предмет, потребност и удобни часове) само с този педагог.</label>
+        <p class="hint" style="margin-top:.6rem">Телефонът и имейлът не се споделят, докато педагогът не приеме заявката.</p>
       </div>
-      <button class="btn yellow" type="submit">Изпрати заявката</button>
-      <a class="btn alt" href="results.html">Назад към предложенията</a>
+      <p class="btn-row"><button class="btn" type="submit">Изпрати заявката</button><a class="btn alt" href="results.html">Назад към педагозите</a></p>
     </form>
   </div>
 
   <div id="done" hidden>
-    <h1>Заявката е изпратена</h1>
-    <div class="notice" role="status"><p><strong id="who2"></strong> ще получи заявката ви и обикновено отговаря до <span id="resp"></span> часа. Ще ви пишем на посочения имейл.</p>
-    <p>Съгласието е дадено сега. В демото нищо не се записва: <time id="ts"></time>.</p></div>
-    <h2>Какво следва</h2>
-    <ol><li>Педагогът отговаря с предложение за час.</li><li>Вие правите пробен урок.</li><li>След урока можете да оставите отзив.</li></ol>
-    <p class="hint">В прототипа нищо не е изпратено наистина.</p>
-    <div class="next btn-row"><a class="btn yellow" href="results.html">Вижте другите предложения</a><a class="btn alt" href="index.html">Към началото</a></div>
+    <h1>Заявката е готова</h1>
+    <div class="notice" role="status">
+      <p>Заявката отива при педагога. Когато отговори, ще получите известие на имейла си, а отговорът ще стои в „Съобщения“ във вашия профил.</p>
+      <p>Вие се съгласихте информацията за детето да се сподели само с този педагог.</p>
+      <p><strong>В демото нищо не се изпраща наистина.</strong></p>
+    </div>
+    <div class="btn-row"><a class="btn" href="inbox.html">Към съобщенията</a><a class="btn alt" href="results.html">Още педагози</a></div>
   </div>
 </main>
 <script src="js/data.js"></script>
 <script src="js/layout.js"></script>
 <script>
 const t=TEACHERS.find(x=>x.id===+new URLSearchParams(location.search).get("id"))||TEACHERS[0];
-let qd=null;try{qd=JSON.parse(sessionStorage.getItem("q"));}catch(e){}
-try{if(sessionStorage.getItem("flow")==="1"){prog.hidden=false;crumb.hidden=true;}}catch(e){}
-to.textContent="До: "+t.name+", "+t.city+".";
-who.textContent=t.name;
-needtxt.textContent=qd&&qd.need!=="other"?NEEDS[qd.need]:"не е посочена";
+const parts=t.name.split(" ");
+to.textContent="До: "+parts[0]+" "+(parts[1]||"")+", "+t.city+".";
+const today=new Date();const iso=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+d1.min=iso;d2.min=iso;
+const $=id=>document.getElementById(id);
+if(role()==="visitor"){$("gate").hidden=false;}
+else if(role()==="teacher"){$("teacher-gate").hidden=false;}
+else{$("form-wrap").hidden=false;}
 c.addEventListener("submit",e=>{
-  e.preventDefault();
-  const errs=[];
-  if(!nm.value.trim()) errs.push(["nm","Напишете името си."]);
-  if(!/^\S+@\S+\.\S+$/.test(em.value)) errs.push(["em","Напишете имейл, например ime@primer.bg."]);
-  if(!cons.checked) errs.push(["cons","Без съгласие не можем да изпратим информацията."]);
+  e.preventDefault();const errs=[];
+  if(!d1.value)errs.push(["d1","Попълнете дата за първия час."]);
+  if(!t1.value)errs.push(["t1","Попълнете час за първия урок."]);
+  if(d1.value&&d1.value<iso)errs.push(["d1","Изберете дата, която не е в миналото."]);
+  if(!cons.checked)errs.push(["cons","Без съгласие не можем да изпратим информацията за детето."]);
   const box=document.getElementById("errsum");
-  if(errs.length){box.hidden=false;box.innerHTML="<strong>Моля, поправете:</strong><ul>"+errs.map(([i,m])=>`<li><a href="#${i}">${m}</a></li>`).join("")+"</ul>";box.focus();return;}
-  const now=new Date();
-  ts.dateTime=now.toISOString();ts.textContent=now.toLocaleString("bg-BG");
-  who2.textContent=t.name;resp.textContent=t.respHours;
-  document.getElementById("form-view").hidden=true;done.hidden=false;document.querySelector("#done h1").focus?.();window.scrollTo(0,0);
+  if(errs.length){box.hidden=false;box.innerHTML="<strong>Погледнете тези полета</strong><ul>"+errs.map(([i,m])=>`<li><a href="#${i}">${esc(m)}</a></li>`).join("")+"</ul>";box.focus();return;}
+  $("form-wrap").hidden=true;$("done").hidden=false;window.scrollTo(0,0);
 });
 </script>
 </body>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Съобщения – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main" class="wrap">
+  <h1>Съобщения</h1>
+  <div class="notice privacy"><p style="margin:0">Телефонът и имейлът не се показват в съобщенията. Съобщенията остават в платформата, а известието отива на имейла ви. <strong>В демото съобщенията не се изпращат наистина.</strong></p></div>
+  <div id="gate" hidden>
+    <p>Съобщенията са за влезли потребители. <a href="login.html">Вход</a> или <a href="signup-family.html">регистрация</a>.</p>
+  </div>
+  <div id="wrap" class="inbox" hidden>
+    <nav aria-label="Разговори"><h2 style="font-size:1.2rem">Разговори</h2><ul class="threads" id="threads"></ul></nav>
+    <section aria-labelledby="conv-h">
+      <h2 id="conv-h" style="font-size:1.2rem" tabindex="-1">Изберете разговор</h2>
+      <ol class="msgs" id="msgs" aria-live="polite" aria-relevant="additions"></ol>
+      <form id="send" class="card white" aria-label="Нов отговор">
+        <div class="field"><label for="text">Съобщение</label><textarea id="text" required></textarea></div>
+        <button class="btn" type="submit">Изпрати</button>
+        <p id="sent" class="hint" role="status"></p>
+      </form>
+    </section>
+  </div>
+</main>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const r=role();
+if(r==="visitor"){$("gate").hidden=false;}
+else{
+  $("wrap").hidden=false;
+  const threads=DEMO_THREADS;
+  const cur=new URLSearchParams(location.search).get("c")||threads[0].id;
+  const extra=SS.get("sn_msgs",{});
+  const seen=SS.get("sn_seen",[]);
+  if(!seen.includes(cur)) SS.set("sn_seen",seen.concat(cur));
+  $("threads").innerHTML=threads.map(th=>`<li><a href="inbox.html?c=${th.id}" ${th.id===cur?'aria-current="true"':""}><strong>${esc(r==="parent"?th.with:"Семейство (пример)")}</strong><br><span class="muted">${esc(th.last)}</span></a></li>`).join("");
+  const th=threads.find(x=>x.id===cur)||threads[0];
+  const all=th.msgs.concat(extra[th.id]||[]);
+  const who=m=>m.from===r?"Вие":(r==="parent"?esc(th.with):"Семейство (пример)");
+  $("msgs").innerHTML=all.map(m=>`<li class="msg ${m.from===r?"me":""}"><span class="who">${who(m)}</span>${esc(m.text)}</li>`).join("");
+  $("conv-h").textContent=r==="parent"?th.with:"Семейство (пример)";
+  $("send").addEventListener("submit",e=>{
+    e.preventDefault();const text=$("text").value.trim();
+    if(!text){$("sent").textContent="Попълнете съобщение, преди да го изпратите.";return;}
+    const store=SS.get("sn_msgs",{});const list=(store[th.id]||[]).concat({from:r,text});
+    store[th.id]=list;SS.set("sn_msgs",store);
+    const li=document.createElement("li");li.className="msg me";li.innerHTML=`<span class="who">Вие</span>${esc(text)}`;$("msgs").appendChild(li);
+    $("text").value="";$("sent").textContent="Съобщението е добавено в демото. Не се изпраща наистина.";
+  });
+}
+</script>
+</body>
+</html>
