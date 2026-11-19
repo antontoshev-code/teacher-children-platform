@@ -1,13 +1,13 @@
 /* Обща лента, навигация и долен колонтитул. В WordPress това са шаблонни части на Kadence (Header/Footer Builder). */
 (function(){
   /* Меню: логото води към началото. „Намери педагог“ е бутонът-действие (въпросник с процент на съвпадение). Без каталог. */
-  const NAV=[["how-it-works.html","Как работи"],["teacher-register.html","За педагози"]];
+  const NAV=[["how-it-works.html","Как работи"],["signup-family.html","За семейства"],["teacher-register.html","За педагози"]];
   const page=location.pathname.split("/").pop()||"index.html";
   const cur=h=>h===page?' aria-current="page"':"";
   const ctaCur=(page==="questionnaire.html"||page==="results.html")?' aria-current="page"':"";
   const top=`
   <a class="skip" href="#main">Към основното съдържание</a>
-  <div class="proto-bar"><div class="wrap"><p><strong>Прототип за обсъждане.</strong> Данните са измислени, цветовете и шрифтът са временни. Нищо не се изпраща и не се записва никъде освен във вашия браузър.</p></div></div>
+  <div class="proto-bar"><div class="wrap"><p><strong>Демо за първо впечатление.</strong> Визията е груба, а имената, цветовете и функциите са временни. Всички данни са измислени. Нищо не се изпраща и не се записва.</p></div></div>
   <div class="a11y-bar" role="region" aria-label="Настройки за четене"><div class="wrap">
     <span>Четене:</span>
     <button type="button" id="fs-dec" aria-label="По-малък текст">A−</button>
@@ -15,15 +15,15 @@
     <button type="button" id="hc" aria-pressed="false">Висок контраст</button>
   </div></div>
   <header class="site"><div class="wrap">
-    <a class="logo" href="index.html"><span class="dot" aria-hidden="true"></span><span>Слънчев мост</span></a>
+    <a class="logo" href="index.html"><span class="dot" aria-hidden="true"></span><span>Sientica Nest</span></a>
     <nav class="main" aria-label="Основно меню"><ul>${NAV.map(([h,t])=>`<li><a href="${h}"${cur(h)}>${t}</a></li>`).join("")}<li><a class="navcta" href="questionnaire.html"${ctaCur}>Намери педагог</a></li></ul></nav>
   </div></header>`;
   const foot=`
   <footer class="site"><div class="wrap">
-    <p><strong>Слънчев мост</strong> е безплатна за семействата. Платформата е свързана с фондация „Слънчеви деца“.</p>
-    <p>Данните за децата се пазят в ЕС и се показват само на избран от вас педагог, след вашето съгласие. <a href="how-it-works.html#privacy">Как пазим данните</a></p>
+    <p><strong>Sientica Nest</strong> е безплатна за семействата. Платформата е свързана с фондация „Слънчеви деца“.</p>
+    <p>Данните се пазят на сървър в България и се показват само на избран от вас педагог, след вашето съгласие. <a href="how-it-works.html#privacy">Как пазим данните</a></p>
     <p>Платформата подрежда предложения по профили. Тя не гарантира, че даден педагог е подходящ за вашето дете. Първият урок е пробен.</p>
-    <p><a href="index.html">Начало</a> · <a href="how-it-works.html">Как работи</a> · <a href="questionnaire.html">Намери педагог</a> · <a href="teacher-register.html">Регистрация за педагози</a> · <a href="terms.html">Условия за ползване</a> · <a href="privacy.html">Поверителност</a></p>
+    <p><a href="index.html">Начало</a> · <a href="how-it-works.html">Как работи</a> · <a href="questionnaire.html">Намери педагог</a> · <a href="teacher-register.html">Регистрация за педагози</a> · <a href="teacher-dashboard.html">Табло на педагога (демо)</a> · <a href="feedback.html">Обратна връзка</a> · <a href="terms.html">Условия за ползване</a> · <a href="privacy.html">Поверителност</a></p>
   </div></footer>`;
   document.body.insertAdjacentHTML("afterbegin",top);
   document.body.insertAdjacentHTML("beforeend",foot);
@@ -40,6 +40,8 @@
 
 const fmtRating=t=>t.reviews?`<span aria-hidden="true">★</span> ${String(t.rating).replace(".",",")} <span class="sr">от 5, </span>(${t.reviews} ${t.reviews==1?"отзив":"отзива"})`:"Нов профил, още без отзиви";
 const SLOT_SHORT={wdm:"сутрин",wda:"следобед",wde:"вечер",we:"уикенд"};
+
+const esc=v=>String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
 function teacherCard(t,extra){
   const initials=t.name.split(" ").map(w=>w[0]).join("");

@@ -70,31 +70,34 @@ function hardFilter(q,t){
   const wantsP=q.format==="presential"||q.format==="any", wantsO=q.format==="online"||q.format==="any";
   const okP=wantsP&&t.formats.includes("presential")&&t.city===q.city;
   const okO=wantsO&&t.formats.includes("online");
-  if(!okP&&!okO) return q.format==="presential"?"е в друго населено място":"не предлага избрания формат";
-  return null;
+  if(okP||okO) return null;
+  if(q.format==="online") return "не предлага онлайн";
+  if(!t.formats.includes("presential")) return "не предлага присъствено обучение";
+  return "е в друго населено място";
 }
 
+/* Критериите, които не могат да се оценят (няма уточнения, няма отзиви, потребност „друга“), се пропускат,
+   а останалите тежести се мащабират до 100, за да не се печелят точки без данни. */
 function score(q,t){
-  const r=[];let s=0;
-  // 1. Опит с типа потребност (най-голяма тежест заедно с уточненията)
+  const r=[];const parts=[];
   const y=q.need==="other"?0:(t.exp[q.need]||0);
-  const n=q.need==="other"?0.5:Math.min(y/5,1);
-  s+=WEIGHTS.need*n;
-  if(q.need!=="other"&&y>0) r.push(`Има ${y} ${y==1?"година":"години"} опит с деца ${q.need==="autism"?"с аутизъм":"със синдром на Даун"}.`);
-  // 1б. Уточнения за детето (по желание): дял от поисканото, което педагогът предлага
+  if(q.need!=="other"){
+    parts.push([WEIGHTS.need,Math.min(y/5,1)]);
+    if(y>0) r.push(`Има ${y} ${y==1?"година":"години"} опит с деца ${q.need==="autism"?"с аутизъм":"със синдром на Даун"}.`);
+  }
   const want=q.support||[];const have=want.filter(k=>t.skills.includes(k));
-  s+=WEIGHTS.support*(want.length?have.length/want.length:0.5);
-  have.forEach(k=>r.push(SUPPORT[k]+"."));
-  // 2. Опит с възрастовата група
-  const ya=t.ageExp[bandOf(q.cls)]||0; s+=WEIGHTS.age*Math.min(ya/6,1);
+  if(want.length){ parts.push([WEIGHTS.support,have.length/want.length]); have.forEach(k=>r.push(SUPPORT[k]+".")); }
+  const ya=t.ageExp[bandOf(q.cls)]||0;
+  parts.push([WEIGHTS.age,Math.min(ya/6,1)]);
   if(ya>0) r.push(`Работи ${ya} ${ya==1?"година":"години"} с ученици от ${bandLabel[bandOf(q.cls)]}.`);
-  // 3. Цена в бюджета
-  if(t.price<=q.budget){ s+=WEIGHTS.price*(0.6+0.4*(q.budget-t.price)/q.budget); r.push(`Цената (${t.price} € на час) е в рамките на бюджета ви.`);}
-  else { s+=WEIGHTS.price*Math.max(0,0.4-(t.price-q.budget)/q.budget); r.push(`Цената (${t.price} € на час) е малко над бюджета ви.`);}
-  // 4. Отзиви
-  if(t.reviews>0){ s+=WEIGHTS.reviews*((t.rating-3)/2)*Math.min(t.reviews/8,1); r.push(`Оценка ${t.rating.toString().replace(".",",")} от ${t.reviews} отзива на родители.`);}
-  // 5. Бързина на отговор
-  s+=WEIGHTS.response*Math.max(0,1-t.respHours/24);
+  const pv=t.price<=q.budget ? 0.6+0.4*(q.budget-t.price)/q.budget : Math.max(0,0.4-(t.price-q.budget)/q.budget);
+  parts.push([WEIGHTS.price,pv]);
+  r.push(t.price<=q.budget?`Цената (${t.price} € на час) е в рамките на бюджета ви.`:`Цената (${t.price} € на час) е малко над бюджета ви.`);
+  if(t.reviews>0){
+    parts.push([WEIGHTS.reviews,Math.max(0,Math.min(1,(t.rating-3)/2))*Math.min(t.reviews/8,1)]);
+    r.push(`Оценка ${t.rating.toString().replace(".",",")} от ${t.reviews} отзива на родители.`);
+  }
+  parts.push([WEIGHTS.response,Math.max(0,1-t.respHours/24)]);
   if(t.respHours<=6) r.push(`Обикновено отговаря до ${t.respHours} ${t.respHours==1?"час":"часа"}.`);
   const common=q.times.filter(x=>t.times.includes(x)).map(x=>TIMES[x].toLowerCase());
   r.unshift(`Преподава ${SUBJECTS[q.subject].toLowerCase()} и има свободни часове: ${common.join(", ")}.`);
@@ -103,7 +106,9 @@ function score(q,t){
   if(q.need!=="other") chips.push({t:NEEDS[q.need].replace(/ \(.*\)/,""),ok:y>0});
   want.forEach(k=>chips.push({t:SUPPORT[k].replace(/ \(.*\)/,""),ok:t.skills.includes(k)}));
   chips.push({t:t.price<=q.budget?"В бюджета":"Над бюджета",ok:t.price<=q.budget});
-  return {pct:Math.round(s),reasons:r,chips};
+  const total=parts.reduce((a,p)=>a+p[0],0);
+  const s=parts.reduce((a,p)=>a+p[0]*p[1],0);
+  return {pct:Math.round(100*s/total),reasons:r,chips};
 }
 
 function runMatch(q){
