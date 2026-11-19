@@ -36,15 +36,14 @@ function unreadCount(){
       <a class="pill ghost" href="inbox.html">Съобщения${un?` <span class="badge" aria-label="${un} непрочетени">${un}</span>`:""}</a>
       <button class="pill text" type="button" id="logout">Изход</button>`;
   }
-  const bar=`<div class="demo-bar"><div class="wrap">
-    <label class="role-pick">Разглеждате като <select id="role" aria-label="Разглеждате като">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}"${k===r?" selected":""}>${v}</option>`).join("")}</select></label></div></div>`;
+  const roleSel=`<label class="role-pick">Разглеждате като <select id="role">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}"${k===r?" selected":""}>${v}</option>`).join("")}</select></label>`;
   const top=`<a class="skip" href="#main">Към основното съдържание</a>
-  ${bar}
-  <div class="a11y-bar" role="region" aria-label="Настройки за четене"><div class="wrap">
+  <div class="a11y-bar" role="region" aria-label="Настройки на страницата"><div class="wrap">
     <span>Четене:</span>
     <button type="button" id="fs-dec" aria-label="По-малък текст">A−</button>
     <button type="button" id="fs-inc" aria-label="По-голям текст">A+</button>
     <button type="button" id="hc" aria-pressed="false">Висок контраст</button>
+    ${roleSel}
   </div></div>
   <header class="site"><div class="wrap head">
     <a class="logo" href="index.html"><img src="img/logo.webp" alt="Sientica Nest" width="320" height="256"></a>
