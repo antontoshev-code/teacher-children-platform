@@ -20,7 +20,7 @@
 <script>
 const ids=saved();
 const q=role()==="parent"?qData():null;
-note.innerHTML=role()==="visitor"?'<span class="notice demo" style="display:inline-block;margin:0">Влезте, за да не ги загубите. Тези са запазени само в този браузър и в тази сесия.</span>':"";
+note.innerHTML=role()==="visitor"?'<span class="notice demo" style="display:inline-block;margin:0">Влезте, за да не загубите запазените. Засега са само в този браузър.</span>':"";
 const L=TEACHERS.filter(t=>ids.includes(t.id));
 count.textContent=L.length?`Запазени: ${L.length}`:"Още нямате запазени педагози.";
 out.innerHTML=L.length?L.map(t=>teacherCard(t,{q})).join(""):'<div class="card"><p>Запазете педагог с бутона „Запази“ на картата му.</p><p><a class="btn" href="results.html">Намери педагог</a></p></div>';

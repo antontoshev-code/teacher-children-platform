@@ -10,7 +10,6 @@
 <body>
 <main id="main" class="wrap">
   <h1>Съобщения</h1>
-  <div class="notice privacy"><p style="margin:0">Телефонът и имейлът не се показват в съобщенията. Съобщенията остават в платформата, а известието отива на имейла ви. <strong>В демото съобщенията не се изпращат наистина.</strong></p></div>
   <div id="gate" hidden>
     <p>Съобщенията са за влезли потребители. <a href="login.html">Вход</a> или <a href="signup-family.html">регистрация</a>.</p>
   </div>
@@ -52,7 +51,7 @@ else{
     const store=SS.get("sn_msgs",{});const list=(store[th.id]||[]).concat({from:r,text});
     store[th.id]=list;SS.set("sn_msgs",store);
     const li=document.createElement("li");li.className="msg me";li.innerHTML=`<span class="who">Вие</span>${esc(text)}`;$("msgs").appendChild(li);
-    $("text").value="";$("sent").textContent="Съобщението е добавено в демото. Не се изпраща наистина.";
+    $("text").value="";$("sent").textContent="Съобщението е добавено. Това е демо, затова остава само в този браузър.";
   });
 }
 </script>
