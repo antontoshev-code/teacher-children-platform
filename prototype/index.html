@@ -8,79 +8,97 @@
 </head>
 <body>
 <main id="main" style="padding-top:0">
+
+  <!-- 1. Hero: едно основно действие -->
   <section class="hero"><div class="wrap">
     <div>
       <h1>Педагог, който разбира вашето дете</h1>
-      <p class="lead">Отговорете на няколко прости въпроса. Ще ви покажем до пет педагози за деца с аутизъм и синдром на Даун и ще обясним защо са избрани.</p>
+      <p class="lead">Отговорете на няколко въпроса. Ще ви покажем до пет педагога за деца с аутизъм и синдром на Даун и ще обясним защо са избрани.</p>
       <p><strong>За семействата е безплатно.</strong> Диагнозата се вижда само от педагога, когото изберете.</p>
-      <div class="btn-row">
-        <a class="btn" href="questionnaire.html">Намери педагог</a>
-        <a class="btn alt" href="how-it-works.html">Как работи</a>
-      </div>
+      <div class="btn-row"><a class="btn" href="questionnaire.html">Намери педагог</a></div>
     </div>
     <div class="ph round" role="img" aria-label="Място за снимка"><span><span class="ic" aria-hidden="true">☀</span>Тук: снимка на педагог и дете.<br>Само с писмено разрешение.</span></div>
   </div>
   <svg class="wave hero-wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,40 C240,80 480,0 720,30 C960,60 1200,70 1440,20 L1440,70 L0,70 Z"/></svg>
   </section>
 
-  <section class="wrap block"><div class="card" style="background:#eef6f2"><h2 style="font-size:1.2rem">Помогнете ни да я подобрим</h2><p>Това е груб модел, за да видите визията и основния път. Не е окончателен дизайн и не е окончателна функционалност. <a href="feedback.html">Какво бихте добавили, махнали или променили?</a></p></div></section>
-  <section class="wrap block center" aria-labelledby="subj" style="margin-top:2rem">
-    <h2 id="subj">Изберете какво търсите</h2>
-    <p>Подкрепа по предмети, а не само каталог. Натиснете предмет, за да видите педагозите.</p>
-    <div class="grid c3" id="subjgrid" style="text-align:left"></div>
-    <div class="btn-row" style="justify-content:center"><a class="btn yellow" href="questionnaire.html">Започни въпросника</a></div>
+  <!-- Бележка за обратна връзка -->
+  <section class="wrap block">
+    <div class="card" style="background:#eef6f2">
+      <h2 style="font-size:1.2rem">Помогнете ни да я подобрим</h2>
+      <p>Това е груб модел, за да видите визията и основния път. Не е окончателен дизайн и не е окончателна функционалност. <a href="feedback.html">Какво бихте добавили, махнали или променили?</a></p>
+    </div>
   </section>
 
+  <!-- 2. Как работи: три стъпки -->
   <section class="wrap block" aria-labelledby="how">
-    <div class="center"><h2 id="how">Как работи</h2><p>Свързваме семейства и педагози просто, безопасно и бързо.</p></div>
+    <div class="center"><h2 id="how">Как работи</h2><p>Три стъпки от въпросника до пробния урок.</p></div>
     <ol class="steps">
       <li><h3>Разкажете за нуждите</h3><p>Град, предмет, клас, часове и бюджет. По желание: какво помага на детето. Около 3 минути.</p></li>
-      <li><h3>Получете предложения</h3><p>Виждате до 5 педагози с процент на съвпадение и обяснение на ясен език.</p></li>
-      <li><h3>Изпратете заявка</h3><p>Правите пробен урок. Вие решавате какво да споделите и кога.</p></li>
+      <li><h3>Получете предложения</h3><p>До пет педагога с процент на съвпадение и обяснение на ясен език.</p></li>
+      <li><h3>Изпратете заявка</h3><p>Записвате пробен урок. Вие решавате какво да споделите и кога.</p></li>
     </ol>
   </section>
 
-  <section class="wrap block" aria-labelledby="get">
-    <div class="grid c2" style="align-items:center">
-      <div class="ph" role="img" aria-label="Място за снимка"><span><span class="ic" aria-hidden="true">📚</span>Тук: снимка от урок<br>(без лица на деца)</span></div>
-      <div><span class="kicker">Какво получавате</span><h2>Спокойствие и яснота</h2>
-        <ul class="checks">
-          <li><div><h3>Педагози с опит</h3><p>Всеки профил описва опита с аутизъм и синдром на Даун. Екипът проверява профилите.</p></div></li>
-          <li><div><h3>Защитени лични данни</h3><p>Не искаме име, снимка или адрес на детето. Диагнозата се споделя само след вашето съгласие.</p></div></li>
-          <li><div><h3>Лесно за всички</h3><p>Голям текст, ясни думи, работа само с клавиатура, подготовка за екранен четец.</p></div></li>
-        </ul></div>
+  <!-- 3. Две колони: семейства и педагози -->
+  <section class="wrap block" aria-labelledby="who">
+    <h2 id="who" class="center">За кого е платформата</h2>
+    <div class="grid c2" style="margin-top:1.2rem">
+      <div class="card white">
+        <span class="kicker">За семейства</span>
+        <h3>Безплатно, без обещания</h3>
+        <ul class="checks" style="list-style:none;padding:0;margin:0">
+          <li><div><h3 style="font-size:1.05rem">Педагози с опит</h3><p>Всеки профил описва опита с аутизъм и синдром на Даун, по години.</p></div></li>
+          <li><div><h3 style="font-size:1.05rem">Защитени данни</h3><p>Не искаме име, снимка или адрес на детето. Диагнозата се споделя само след ваше съгласие.</p></div></li>
+        </ul>
+        <p class="btn-row"><a class="btn" href="signup-family.html">Създай безплатен профил</a></p>
+      </div>
+      <div class="card white">
+        <span class="kicker">За педагози</span>
+        <h3>Видимост срещу месечен абонамент</h3>
+        <ul class="checks" style="list-style:none;padding:0;margin:0">
+          <li><div><h3 style="font-size:1.05rem">Профилът се проверява</h3><p>Екипът преглежда квалификацията, преди профилът да стане видим.</p></div></li>
+          <li><div><h3 style="font-size:1.05rem">Пробен урок</h3><p>Първият урок е пробен. Педагогът обяснява предварително какво включва.</p></div></li>
+        </ul>
+        <p class="btn-row"><a class="btn alt" href="teacher-register.html">Регистрация за педагози</a></p>
+      </div>
     </div>
   </section>
 
+  <!-- 4. За основателя (текстът е на основателя) -->
   <section class="wrap block" aria-labelledby="mission">
     <div class="grid c2" style="align-items:center">
-      <div><span class="kicker">Нашата мисия</span><h2 id="mission">[Име], психолог</h2>
-        <p class="draft">Тук Цветелина разказва със свои думи защо е създадена платформата. Текстът ще е нейният, не измислен от нас.</p>
-        <p>Платформата е изградена в партньорство с фондация „Слънчеви деца“.</p></div>
-      <div class="ph round" role="img" aria-label="Място за портрет"><span><span class="ic" aria-hidden="true">🙂</span>Портрет на Цветелина<br>(със съгласие)</span></div>
+      <div>
+        <span class="kicker">Защо е създадена</span>
+        <h2 id="mission">[Име на основателя]</h2>
+        <p class="draft">Тук основателят разказва със свои думи защо е създадена платформата.</p>
+        <p>Платформата е изградена в партньорство с фондация „Слънчеви деца“.</p>
+      </div>
+      <div class="ph round" role="img" aria-label="Място за портрет"><span><span class="ic" aria-hidden="true">🙂</span>Портрет на основателя<br>(със съгласие)</span></div>
     </div>
   </section>
 
+  <!-- 5. ЧЗВ -->
   <section class="wrap block narrow" aria-labelledby="faq">
-    <span class="kicker">Въпроси</span><h2 id="faq">Имате въпроси? Ето отговорите.</h2>
-    <details class="faq" open><summary>Какво е „Sientica Nest“?</summary><p>Безплатна за семействата платформа, която свързва деца с аутизъм и синдром на Даун с педагози по предмети. Тя не е агенция и не наема педагозите. Вие и педагогът се договаряте директно.</p></details>
+    <span class="kicker">Въпроси</span>
+    <h2 id="faq">Често задавани въпроси</h2>
+    <details class="faq" open><summary>Какво е Sientica Nest?</summary><p>Безплатна за семействата платформа, която свързва деца с аутизъм и синдром на Даун с педагози по предмети. Тя не е агенция и не наема педагозите. Вие и педагогът се договаряте директно.</p></details>
     <details class="faq"><summary>Колко струва за семействата?</summary><p>Нищо. Педагозите плащат месечен абонамент за профила си.</p></details>
-    <details class="faq"><summary>Кой вижда диагнозата на детето ми?</summary><p>Само педагогът, на когото изпратите заявка, и само след вашето отделно съгласие. Не се показва в резултатите, каталога или профилите.</p></details>
+    <details class="faq"><summary>Кой вижда диагнозата на детето ми?</summary><p>Само педагогът, на когото изпратите заявка, и само след вашето отделно съгласие. Не се показва в резултатите и в профилите.</p></details>
     <details class="faq"><summary>Гарантирате ли, че педагогът е подходящ?</summary><p>Не. Подреждаме по профили. Затова първият урок е пробен.</p></details>
     <details class="faq"><summary>Как да изтрия данните си?</summary><p>От профила си, с един бутон. Можете и да оттеглите съгласието по всяко време.</p></details>
   </section>
 
-  <section class="wrap block"><div class="card" style="background:#fbe7b8">
-      <h2>Вие сте педагог?</h2>
-      <p>Създайте профил, опишете опита си и получавайте заявки от семейства във вашия район. Профилът е с месечен абонамент. Първият урок със семейството е пробен.</p>
-      <a class="btn" href="teacher-register.html">Регистрация за педагози</a></div></section>
+  <!-- 6. Затваряне: един призив -->
+  <section class="wrap block">
+    <div class="card" style="background:#fbe7b8;text-align:center">
+      <h2>Започнете с няколко въпроса</h2>
+      <p class="center" style="margin:0 auto 1rem">Безплатно за семействата. Отнема около 3 минути.</p>
+      <a class="btn" href="questionnaire.html">Намери педагог</a>
+    </div>
+  </section>
 </main>
 <script src="js/data.js"></script>
 <script src="js/layout.js"></script>
-<script>
-const ic={math:"➗",bg:"📖",en:"🔤",science:"🔬",nvo:"📝",daily:"🏠"};
-const ds={math:"Задачи на малки стъпки, с конкретни предмети.",bg:"Четене, писане и разбиране на текст с визуални опори.",en:"Думи и ежедневни фрази чрез картинки и диалози.",science:"Опити, снимки и ключови понятия.",nvo:"Подготовка с адаптации и реалистични цели.",daily:"Часът, парите, пазаруването, самостоятелността."};
-subjgrid.innerHTML=Object.entries(SUBJECTS).map(([k,v])=>`<article class="card img"><a class="cover" href="questionnaire.html"><div class="ph" aria-hidden="true"><span class="ic" style="font-size:3.2rem">${ic[k]}</span></div><div class="body"><h3>${v}</h3><p>${ds[k]}</p></div></a></article>`).join("");
-</script>
 </body>
 </html>
