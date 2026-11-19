@@ -36,8 +36,8 @@ function unreadCount(){
       <a class="pill ghost" href="inbox.html">Съобщения${un?` <span class="badge" aria-label="${un} непрочетени">${un}</span>`:""}</a>
       <button class="pill yellow" type="button" id="logout">Изход</button>`;
   }
-  const bar=`<div class="demo-bar"><div class="wrap"><p><strong>Демо за първо впечатление.</strong> Визията е груба, а имената, цветовете и функциите са временни. Всички данни са измислени. Нищо не се изпраща.</p>
-    <label class="role-pick">Разглеждате като <select id="role">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}"${k===r?" selected":""}>${v}</option>`).join("")}</select></label></div></div>`;
+  const bar=`<div class="demo-bar"><div class="wrap">
+    <label class="role-pick">Разглеждате като <select id="role" aria-label="Разглеждате като">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}"${k===r?" selected":""}>${v}</option>`).join("")}</select></label></div></div>`;
   const top=`<a class="skip" href="#main">Към основното съдържание</a>
   ${bar}
   <div class="a11y-bar" role="region" aria-label="Настройки за четене"><div class="wrap">
@@ -77,6 +77,7 @@ function unreadCount(){
       <div><h2 class="foot-h">Педагози по град</h2><p>${cityLinks}</p></div>
     </div>
     <p>Данните се пазят на сървър в България и се показват само на избрания от вас педагог, след вашето съгласие. <a href="privacy.html">Как пазим данните</a></p>
+    <p class="demo-line">Примерен сайт с измислени данни.</p>
     <p>Платформата подрежда предложения по профили. Тя не гарантира, че даден педагог е подходящ за вашето дете. Първият урок е пробен.</p>
     <p><a href="index.html">Начало</a> · <a href="results.html">Намери педагог</a> · <a href="teacher-register.html">За педагози</a> · <a href="login.html">Вход</a> · <a href="feedback.html">Обратна връзка</a> · <a href="terms.html">Условия за ползване</a> · <a href="privacy.html">Поверителност</a></p>
   </div></footer>`);
