@@ -3,85 +3,79 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Начало – Sientica Nest</title>
+<title>Sientica Nest – педагози за деца с аутизъм и синдром на Даун</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<main id="main" style="padding-top:0">
+<main id="main">
 
-  <!-- 1. Hero: едно основно действие -->
+  <!-- Hero: едно основно действие -->
   <section class="hero"><div class="wrap">
     <div>
       <h1>Педагог, който разбира вашето дете</h1>
-      <p class="lead">Отговорете на няколко въпроса. Ще ви покажем до пет педагога за деца с аутизъм и синдром на Даун и ще обясним защо са избрани.</p>
-      <p><strong>За семействата е безплатно.</strong> Диагнозата се вижда само от педагога, когото изберете.</p>
-      <div class="btn-row"><a class="btn" href="questionnaire.html">Намери педагог</a></div>
+      <p class="lead">Отговорете на няколко въпроса. Ще ви покажем педагози за деца с аутизъм и синдром на Даун и ще ви обясним защо са подходящи.</p>
+      <p><strong>За семействата е безплатно.</strong> Диагнозата се вижда само от педагога, когото изберете, и само след ваше съгласие.</p>
+      <div class="btn-row"><a class="btn" href="results.html">Намери педагог</a><a class="btn alt" href="signup-family.html">Регистрация</a></div>
     </div>
-    <div class="ph round" role="img" aria-label="Място за снимка"><span><span class="ic" aria-hidden="true">☀</span>Тук: снимка на педагог и дете.<br>Само с писмено разрешение.</span></div>
-  </div>
-  <svg class="wave hero-wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0,40 C240,80 480,0 720,30 C960,60 1200,70 1440,20 L1440,70 L0,70 Z"/></svg>
-  </section>
-
-  <!-- Бележка за обратна връзка -->
-  <section class="wrap block">
-    <div class="card" style="background:#eef6f2">
-      <h2 style="font-size:1.2rem">Помогнете ни да я подобрим</h2>
-      <p>Това е груб модел, за да видите визията и основния път. Не е окончателен дизайн и не е окончателна функционалност. <a href="feedback.html">Какво бихте добавили, махнали или променили?</a></p>
+    <div class="hero-photos" aria-hidden="true">
+      <img src="img/6-profile.webp" alt="" width="400" height="400">
+      <img src="img/14-profile.webp" alt="" width="400" height="400">
     </div>
-  </section>
+  </div></section>
 
-  <!-- 2. Как работи: три стъпки -->
-  <section class="wrap block" aria-labelledby="how">
-    <div class="center"><h2 id="how">Как работи</h2><p>Три стъпки от въпросника до пробния урок.</p></div>
-    <ol class="steps">
-      <li><h3>Разкажете за нуждите</h3><p>Град, предмет, клас, часове и бюджет. По желание: какво помага на детето. Около 3 минути.</p></li>
-      <li><h3>Получете предложения</h3><p>До пет педагога с процент на съвпадение и обяснение на ясен език.</p></li>
-      <li><h3>Изпратете заявка</h3><p>Записвате пробен урок. Вие решавате какво да споделите и кога.</p></li>
+  <!-- Как работи: три стъпки (единственото място, където се описва процесът) -->
+  <section class="wrap block" id="how" aria-labelledby="how-h">
+    <div class="center"><h2 id="how-h">Как работи</h2><p>Три стъпки от въпросите до пробния урок.</p></div>
+    <ol class="steps" style="margin-top:1.2rem">
+      <li><h3>Разкажете за нуждите</h3><p>Град, предмет, клас, часове и бюджет. По желание: какво помага на детето. Отнема около 3 минути.</p></li>
+      <li><h3>Вижте педагозите</h3><p>Виждате педагози с описание, опит и цена. С регистрация получавате и процент на съвпадение с обяснение.</p></li>
+      <li><h3>Пишете и запазвате урок</h3><p>Изпращате заявка за пробен урок и съобщения в платформата. Вие решавате какво да споделите и кога.</p></li>
     </ol>
   </section>
 
-  <!-- 3. Две колони: семейства и педагози -->
-  <section class="wrap block" aria-labelledby="who">
-    <h2 id="who" class="center">За кого е платформата</h2>
+  <!-- Колони: семейства и педагози -->
+  <section class="wrap block" aria-labelledby="who-h">
+    <h2 id="who-h" class="center">За кого е платформата</h2>
     <div class="grid c2" style="margin-top:1.2rem">
       <div class="card white">
         <span class="kicker">За семейства</span>
-        <h3>Безплатно, без обещания</h3>
-        <ul class="checks" style="list-style:none;padding:0;margin:0">
-          <li><div><h3 style="font-size:1.05rem">Педагози с опит</h3><p>Всеки профил описва опита с аутизъм и синдром на Даун, по години.</p></div></li>
-          <li><div><h3 style="font-size:1.05rem">Защитени данни</h3><p>Не искаме име, снимка или адрес на детето. Диагнозата се споделя само след ваше съгласие.</p></div></li>
+        <h3>Безплатно и спокойно</h3>
+        <ul class="checks">
+          <li><div><strong>Педагози с опит</strong><p>Всеки профил описва опита с аутизъм и синдром на Даун, по години.</p></div></li>
+          <li><div><strong>Защитени данни</strong><p>Не искаме името, снимката или адреса на детето. Диагнозата се споделя само след ваше съгласие.</p></div></li>
         </ul>
-        <p class="btn-row"><a class="btn" href="signup-family.html">Създай безплатен профил</a></p>
+        <p class="btn-row"><a class="btn" href="signup-family.html">Регистрация</a></p>
       </div>
       <div class="card white">
         <span class="kicker">За педагози</span>
-        <h3>Видимост срещу месечен абонамент</h3>
-        <ul class="checks" style="list-style:none;padding:0;margin:0">
-          <li><div><h3 style="font-size:1.05rem">Профилът се проверява</h3><p>Екипът преглежда квалификацията, преди профилът да стане видим.</p></div></li>
-          <li><div><h3 style="font-size:1.05rem">Пробен урок</h3><p>Първият урок е пробен. Педагогът обяснява предварително какво включва.</p></div></li>
+        <h3>Профил срещу месечен абонамент</h3>
+        <ul class="checks">
+          <li><div><strong>Проверка на профила</strong><p>Екипът преглежда квалификацията, преди профилът да стане видим.</p></div></li>
+          <li><div><strong>Първият урок е пробен</strong><p>Обяснявате предварително какво включва. Абонаментът е 20-25 € на месец (ще бъде уточнен).</p></div></li>
         </ul>
         <p class="btn-row"><a class="btn alt" href="teacher-register.html">Регистрация за педагози</a></p>
       </div>
     </div>
   </section>
 
-  <!-- 4. За основателя (текстът е на основателя) -->
-  <section class="wrap block" aria-labelledby="mission">
+  <!-- Основател (текстът е на основателя) -->
+  <section class="wrap block" aria-labelledby="mission-h">
     <div class="grid c2" style="align-items:center">
       <div>
         <span class="kicker">Защо е създадена</span>
-        <h2 id="mission">[Име на основателя]</h2>
+        <h2 id="mission-h">[Име на основателя]</h2>
         <p class="draft">Тук основателят разказва със свои думи защо е създадена платформата.</p>
         <p>Платформата е изградена в партньорство с фондация „Слънчеви деца“.</p>
       </div>
-      <div class="ph round" role="img" aria-label="Място за портрет"><span><span class="ic" aria-hidden="true">🙂</span>Портрет на основателя<br>(със съгласие)</span></div>
+      <div class="center"><img class="round-photo" style="width:200px;height:200px;margin:0 auto" src="img/8-profile.webp" alt="Примерна снимка на основателя" width="200" height="200"></div>
     </div>
   </section>
 
-  <!-- 5. ЧЗВ -->
-  <section class="wrap block narrow" aria-labelledby="faq">
+  <!-- ЧЗВ -->
+  <section class="wrap block narrow" aria-labelledby="faq-h">
     <span class="kicker">Въпроси</span>
-    <h2 id="faq">Често задавани въпроси</h2>
+    <h2 id="faq-h">Често задавани въпроси</h2>
     <details class="faq" open><summary>Какво е Sientica Nest?</summary><p>Безплатна за семействата платформа, която свързва деца с аутизъм и синдром на Даун с педагози по предмети. Тя не е агенция и не наема педагозите. Вие и педагогът се договаряте директно.</p></details>
     <details class="faq"><summary>Колко струва за семействата?</summary><p>Нищо. Педагозите плащат месечен абонамент за профила си.</p></details>
     <details class="faq"><summary>Кой вижда диагнозата на детето ми?</summary><p>Само педагогът, на когото изпратите заявка, и само след вашето отделно съгласие. Не се показва в резултатите и в профилите.</p></details>
@@ -89,12 +83,20 @@
     <details class="faq"><summary>Как да изтрия данните си?</summary><p>От профила си, с един бутон. Можете и да оттеглите съгласието по всяко време.</p></details>
   </section>
 
-  <!-- 6. Затваряне: един призив -->
+  <!-- Призив -->
   <section class="wrap block">
-    <div class="card" style="background:#fbe7b8;text-align:center">
+    <div class="card center" style="background:var(--chip)">
       <h2>Започнете с няколко въпроса</h2>
-      <p class="center" style="margin:0 auto 1rem">Безплатно за семействата. Отнема около 3 минути.</p>
-      <a class="btn" href="questionnaire.html">Намери педагог</a>
+      <p style="margin:0 auto 1rem">Безплатно за семействата. Отнема около 3 минути.</p>
+      <a class="btn" href="signup-family.html">Регистрация</a>
+    </div>
+  </section>
+
+  <!-- Обратна връзка: в самия край, преди долния колонтитул -->
+  <section class="wrap block" aria-labelledby="fb-h">
+    <div class="card notice demo">
+      <h2 id="fb-h" style="font-size:1.25rem">Помогнете ни да я подобрим</h2>
+      <p>Това е груб модел, за да видите визията и основния път. Не е окончателен дизайн и не е окончателна функционалност. <a href="feedback.html">Какво бихте добавили, махнали или променили?</a></p>
     </div>
   </section>
 </main>

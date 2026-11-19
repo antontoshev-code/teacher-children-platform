@@ -4,44 +4,134 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Регистрация за семейства – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <main id="main" class="wrap narrow">
-  <h1>Регистрация за семейства</h1>
-  <p>Безплатно. Профилът ви е нужен, за да запазите отговорите и да получите предложения. Диагнозата на детето не се записва тук. Тя се споделя само с педагога, когото изберете, след отделно съгласие.</p>
-  <div id="form-view">
-    <form id="f" novalidate>
-      <div id="errsum" class="notice" role="alert" tabindex="-1" hidden></div>
+  <div class="notice demo"><strong>Демо, не въвеждайте истински данни.</strong> Нищо не се записва и не се изпраща.</div>
+  <ol class="progress" aria-label="Стъпки на регистрацията" id="prog"></ol>
+  <div id="errsum" class="notice" role="alert" tabindex="-1" hidden></div>
+
+  <form id="f" novalidate>
+    <!-- 1. Профил -->
+    <section data-step="1" aria-labelledby="h1">
+      <h1 id="h1" tabindex="-1">Създайте профил</h1>
+      <p>Безплатно за семействата. Профилът пази отговорите ви и показва подходящите педагози.</p>
       <div class="field"><label for="nm">Вашето име</label><input id="nm" type="text" autocomplete="name"></div>
       <div class="field"><label for="em">Имейл</label><input id="em" type="email" autocomplete="email"></div>
-      <div class="field"><label for="city">Град</label><select id="city"></select></div>
+      <div class="field"><label for="pw">Парола</label><p class="hint">Поне 8 символа. В демото не въвеждайте истинска парола.</p><input id="pw" type="password" autocomplete="new-password"></div>
+    </section>
+
+    <!-- 2. Нуждите на детето -->
+    <section data-step="2" aria-labelledby="h2" hidden>
+      <h1 id="h2" tabindex="-1">Какви са нуждите на детето</h1>
+      <div class="notice privacy"><strong>Чувствителна информация.</strong> Тези отговори не се показват публично. Педагогът ги вижда само ако изпратите заявка и дадете отделно съгласие.</div>
+      <div class="field"><label for="city">В кой град живеете?</label><select id="city"></select></div>
+      <div class="field"><label for="subject">Предмет</label><select id="subject"></select></div>
+      <div class="field"><label for="cls">Клас</label><select id="cls"></select></div>
+      <fieldset class="field"><legend>Потребност</legend><div class="opts" id="need"></div></fieldset>
+      <fieldset class="field"><legend>Какъв формат търсите?</legend><div class="opts" id="format"></div></fieldset>
+      <fieldset class="field"><legend>Удобни часове (може няколко)</legend><div class="opts" id="times"></div></fieldset>
+      <div class="field"><label for="budget">Колко евро на час може да платите?</label><p class="hint">Между 5 и 100 евро. Педагози малко над бюджета също се показват, но с по-малко точки.</p><input id="budget" type="number" inputmode="numeric" min="5" max="100" value="25"></div>
+      <fieldset class="field"><legend>Какво помага на детето? (по желание)</legend><div class="opts" id="support"></div></fieldset>
+    </section>
+
+    <!-- 3. Интереси -->
+    <section data-step="3" aria-labelledby="h3" hidden>
+      <h1 id="h3" tabindex="-1">Интереси на детето</h1>
+      <p>Изберете какво обича детето. Общите интереси с педагога се показват в резултатите.</p>
+      <fieldset class="field"><legend>Интереси</legend><div class="opts" id="interests"></div></fieldset>
+    </section>
+
+    <!-- 4. Съгласие и преглед -->
+    <section data-step="4" aria-labelledby="h4" hidden>
+      <h1 id="h4" tabindex="-1">Проверете и потвърдете</h1>
+      <div class="card white" id="review" style="margin-bottom:1.3rem"></div>
       <div class="notice privacy">
-        <label class="opt" style="border-color:#7a5c00"><input type="checkbox" id="cons"> Съгласен/на съм да получавам съобщения за моя профил. <a href="privacy.html">Поверителност</a></label>
+        <label class="opt"><input type="checkbox" id="consent"> Съгласен/на съм да споделя информацията за детето само с педагога, на когото изпратя заявка. <a href="privacy.html">Поверителност</a></label>
+        <p class="hint" style="margin-top:.6rem">Вие можете да промените отговорите си по всяко време от профила.</p>
       </div>
-      <button class="btn yellow" type="submit">Създай безплатен профил</button>
-    </form>
-  </div>
-  <div id="done" hidden>
-    <h1>Профилът е създаден (демо)</h1>
-    <div class="notice" role="status"><p>В демото нищо не се записва. В истинската версия ще получите имейл за потвърждение.</p></div>
-    <div class="next btn-row"><a class="btn yellow" href="questionnaire.html">Попълни въпросника</a><a class="btn alt" href="index.html">Към началото</a></div>
-  </div>
+    </section>
+
+    <!-- 5. Готово -->
+    <section data-step="5" aria-labelledby="h5" hidden>
+      <h1 id="h5" tabindex="-1">Добре дошли</h1>
+      <p>Профилът е създаден. Сега можете да видите подходящите педагози и да получите процента на съвпадение.</p>
+      <div class="notice demo"><p style="margin:0">В демото нищо не се изпраща наистина.</p></div>
+      <p class="btn-row"><a class="btn" href="results.html">Вижте подходящите педагози</a></p>
+    </section>
+
+    <div class="btn-row" id="nav" style="justify-content:space-between">
+      <button class="btn alt" type="button" id="prev">Назад</button>
+      <button class="btn" type="submit" id="next">Напред</button>
+    </div>
+  </form>
 </main>
 <script src="js/data.js"></script>
 <script src="js/layout.js"></script>
 <script>
-city.innerHTML='<option value="">Изберете град</option>'+CITIES.map(c=>`<option>${c}</option>`).join("");
-f.addEventListener("submit",e=>{
-  e.preventDefault();const errs=[];
-  if(!nm.value.trim())errs.push(["nm","Напишете името си."]);
-  if(!/^\S+@\S+\.\S+$/.test(em.value))errs.push(["em","Напишете имейл, например ime@primer.bg."]);
-  if(!city.value)errs.push(["city","Изберете град."]);
-  if(!cons.checked)errs.push(["cons","Нужно е съгласие, за да създадем профила."]);
-  const box=document.getElementById("errsum");
-  if(errs.length){box.hidden=false;box.innerHTML="<strong>Моля, поправете:</strong><ul>"+errs.map(([i,m])=>`<li><a href="#${i}">${m}</a></li>`).join("")+"</ul>";box.focus();return;}
-  document.getElementById("form-view").hidden=true;done.hidden=false;window.scrollTo(0,0);
+const LABELS=["Профил","Нужди на детето","Интереси","Съгласие","Готово"];
+const opt=o=>Object.entries(o).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join("");
+city.innerHTML='<option value="">Изберете град</option>'+CITIES.map(c=>`<option>${esc(c)}</option>`).join("");
+subject.innerHTML='<option value="">Изберете предмет</option>'+opt(SUBJECTS);
+cls.innerHTML='<option value="">Изберете клас</option>'+[0,1,2,3,4,5,6,7,8,9,10,11,12].map(c=>`<option value="${c}">${classLabel(c)}</option>`).join("");
+const radio=(name,o,def)=>Object.entries(o).map(([k,v])=>`<label class="opt"><input type="radio" name="${name}" value="${k}" ${k===def?"checked":""}> ${esc(v)}</label>`).join("");
+const checks=(name,o)=>Object.entries(o).map(([k,v])=>`<label class="opt"><input type="checkbox" name="${name}" value="${k}"> ${esc(v)}</label>`).join("");
+need.innerHTML=radio("need",NEEDS,"autism");
+format.innerHTML=radio("format",{presential:"Присъствено",online:"Онлайн",any:"Все едно"},"presential");
+times.innerHTML=checks("times",TIMES);
+support.innerHTML=checks("support",SUPPORT);
+interests.innerHTML=INTERESTS.map(x=>`<label class="opt"><input type="checkbox" name="interests" value="${esc(x)}"> ${esc(x)}</label>`).join("");
+prog.innerHTML=LABELS.map((l,i)=>`<li data-i="${i+1}">${i+1}. ${l}</li>`).join("");
+const steps=[...document.querySelectorAll("[data-step]")];
+let cur=1;
+function show(n){
+  cur=n;steps.forEach(s=>s.hidden=+s.dataset.step!==n);
+  [...prog.children].forEach((li,i)=>{i+1===n?li.setAttribute("aria-current","step"):li.removeAttribute("aria-current");});
+  document.getElementById("errsum").hidden=true;
+  nav.hidden=n===5;
+  if(n===4) buildReview();
+  steps[n-1].querySelector("h1").focus();window.scrollTo(0,0);
+}
+function vals(){return {nm:nm.value.trim(),city:city.value,subject:subject.value,cls:cls.value===""?null:+cls.value,need:q_need(),format:q_format(),budget:budget.value.trim(),times:[...document.querySelectorAll("[name=times]:checked")].map(x=>x.value),support:[...document.querySelectorAll("[name=support]:checked")].map(x=>x.value),interests:[...document.querySelectorAll("[name=interests]:checked")].map(x=>x.value)};}
+function q_need(){return document.querySelector("[name=need]:checked").value;}
+function q_format(){return document.querySelector("[name=format]:checked").value;}
+function buildReview(){
+  const v=vals();
+  review.innerHTML=`<h2 style="font-size:1.2rem">Вашите отговори</h2><ul><li>Име: ${esc(v.nm)}</li><li>Град: ${esc(v.city)}</li><li>Предмет: ${esc(SUBJECTS[v.subject])}</li><li>Клас: ${esc(classLabel(v.cls))}</li><li>Формат: ${esc({presential:"присъствено",online:"онлайн",any:"все едно"}[v.format])}</li><li>Часове: ${esc(v.times.map(t=>TIMES[t].toLowerCase()).join(", "))}</li><li>Бюджет: до ${esc(v.budget)} € на час</li><li>Потребност: ${esc(NEEDS[v.need])}</li><li>Интереси: ${esc(v.interests.join(", ")||"не са посочени")}</li></ul>`;
+}
+function validate(n){
+  const v=vals(),e=[];
+  if(n===1){
+    if(!v.nm)e.push(["nm","Попълнете името си."]);
+    if(!/^\S+@\S+\.\S+$/.test(em.value))e.push(["em","Погледнете имейла: изглежда непълен."]);
+    if(pw.value.length<8)e.push(["pw","Попълнете парола с поне 8 символа."]);
+  }
+  if(n===2){
+    if(!v.city)e.push(["city","Изберете град."]);
+    if(!v.subject)e.push(["subject","Изберете предмет."]);
+    if(v.cls===null)e.push(["cls","Изберете клас."]);
+    if(!v.times.length)e.push(["times","Изберете поне един удобен час."]);
+    if(!/^\d+$/.test(v.budget)||+v.budget<5||+v.budget>100)e.push(["budget","Погледнете бюджета: между 5 и 100 евро на час."]);
+  }
+  if(n===4&&!consent.checked)e.push(["consent","Без съгласие не можем да запазим профила."]);
+  return e;
+}
+prev.onclick=()=>show(cur-1);
+f.addEventListener("submit",ev=>{
+  ev.preventDefault();
+  const errs=validate(cur),box=document.getElementById("errsum");
+  if(errs.length){box.hidden=false;box.innerHTML="<strong>Погледнете тези полета</strong><ul>"+errs.map(([i,m])=>`<li><a href="#${i}">${esc(m)}</a></li>`).join("")+"</ul>";box.focus();return;}
+  if(cur===4){
+    const v=vals();
+    SS.set("sn_q",{city:v.city,subject:v.subject,cls:v.cls,need:v.need,format:v.format,budget:+v.budget,times:v.times,support:v.support,interests:v.interests,name:v.nm});
+    SS.set("sn_role","parent");
+    show(5);return;
+  }
+  show(cur+1);
 });
+show(1);
 </script>
 </body>
 </html>

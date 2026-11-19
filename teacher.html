@@ -4,11 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Профил на педагог – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <main id="main" class="wrap">
-  <p class="crumbs"><a href="index.html">Начало</a> › <a href="results.html">Предложения</a> › <span id="cn"></span></p>
+  <p class="crumbs"><a href="index.html">Начало</a> › <a href="results.html">Намери педагог</a> › <span id="cn"></span></p>
   <div id="box"></div>
 </main>
 <script src="js/data.js"></script>
@@ -16,34 +17,58 @@
 <script>
 const id=+new URLSearchParams(location.search).get("id")||1;
 const t=TEACHERS.find(x=>x.id===id)||TEACHERS[0];
-document.getElementById("cn").textContent=t.name;
-document.title=t.name+" – профил – Sientica Nest";
-const need=Object.entries(t.exp).filter(([k,v])=>v>0).map(([k,v])=>`<li>${NEEDS[k]}: ${v} ${v==1?"година":"години"} опит</li>`).join("");
-const age=Object.entries(t.ageExp).map(([k,v])=>`<li>${bandLabel[k]}: ${v} ${v==1?"година":"години"}</li>`).join("");
-const dayrow=Object.entries(TIMES).map(([k,v])=>`<tr><th scope="row">${v}</th><td>${t.times.includes(k)?"Свободен":"Не"}</td></tr>`).join("");
-const ratingLine=t.reviews
-  ? `<p class="rate big"><span aria-hidden="true">★</span> ${String(t.rating).replace(".",",")} от 5 <span class="muted">(${t.reviews} ${t.reviews==1?"отзив":"отзива"})</span></p>`
-  : `<p class="rate big">Нов профил, още без отзиви</p>`;
-document.getElementById("box").innerHTML=`
-<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-<div>
-  <div class="teacher" style="grid-template-columns:96px 1fr"><div class="avatar" aria-hidden="true">${t.name.split(" ").map(w=>w[0]).join("")}</div>
-  <div><h1 style="margin-bottom:.2rem">${t.name}</h1>${ratingLine}<p>${t.city} · ${t.subjects.map(s=>SUBJECTS[s]).join(", ")}</p>
-  ${t.verified?'<span class="chip ok">Профилът е проверен от екипа</span>':'<span class="chip">Профилът още не е проверен</span>'}</div></div>
-  <h2>За мен</h2><p>${t.bio}</p>
-  <h2>Нещо, което е хубаво да знаеш за мен</h2><p>${ABOUT[t.id]||"Още няма текст."}</p>
-  <h2>Опит с потребности</h2><ul>${need||"<li>Още няма посочен опит.</li>"}</ul>
-  <h2>Опит по възрастови групи</h2><ul>${age}</ul>
-  <h2>Обучения и квалификация</h2><ul>${t.training.map(x=>`<li>${x}</li>`).join("")}</ul>
+const q=role()==="parent"?qData():null;
+const ex=q?score(q,t):null;
+const parts=t.name.split(" ");
+const disp=parts[0]+" "+(parts[1]||"");
+cn.textContent=disp;
+document.title=disp+" – профил – Sientica Nest";
+const photo=t.ph?`<img class="round-photo" src="img/${t.ph}-profile.webp" alt="Примерна снимка на ${esc(disp)}" width="220" height="220">`:`<span class="round-photo initials" aria-hidden="true">${esc(parts.map(w=>w[0]).join(""))}</span>`;
+const rating=t.reviews?`<span aria-hidden="true">★</span> ${String(t.rating).replace(".",",")} от 5 <span class="muted">(${t.reviews} ${t.reviews==1?"отзив":"отзива"})</span>`:"Нов профил, още без отзиви";
+const need=Object.entries(t.exp).filter(([k,v])=>v>0).map(([k,v])=>`<li>${esc(NEEDS[k])}: ${v} ${v==1?"година":"години"} опит</li>`).join("");
+const age=Object.entries(t.ageExp).map(([k,v])=>`<li>${esc(bandLabel[k])}: ${v} ${v==1?"година":"години"}</li>`).join("");
+const dayrow=Object.entries(TIMES).map(([k,v])=>`<tr><th scope="row">${esc(v)}</th><td>${t.times.includes(k)?"Свободно":"Не е свободно"}</td></tr>`).join("");
+const common=q?commonInterests(q,t):[];
+const chips=(ex?ex.chips.filter(c=>!c.green&&c.ok).slice(0,4).map(c=>`<span class="chip ok">${esc(c.t)}</span>`).join(""):"")+common.map(x=>`<span class="chip green">И двамата обичате: ${esc(x)}</span>`).join("");
+const matchLine=ex?`<p class="matchnum" aria-label="Съвпадение ${ex.pct} процента">${ex.pct}% съвпадение</p><p>${chips}</p>`:"";
+box.innerHTML=`
+<div class="profile-head">
+  ${photo}
+  <div>
+    <h1 style="margin-bottom:.2rem">${esc(disp)}</h1>
+    <p class="rate big">${rating}</p>
+    <p>${esc(t.city)} · ${t.formats.map(f=>esc(FORMATS[f])).join(", ")} · ${t.subjects.map(s=>esc(SUBJECTS[s])).join(", ")}</p>
+    ${t.verified?'<p><span class="chip ok">Проверен профил</span></p>':''}
+    <p class="muted" style="font-size:.95rem;margin:0">Примерен профил (измислен за демото).</p>
+    ${matchLine}
+    <div class="btn-row">
+      <a class="btn" href="contact.html?id=${t.id}">Изпрати заявка за пробен урок</a>
+      <button type="button" class="save${saved().includes(t.id)?" on":""}" data-save="${t.id}" aria-pressed="${saved().includes(t.id)}">${saved().includes(t.id)?"Запазен":"Запази"}</button>
+    </div>
+  </div>
 </div>
-<aside><div class="card" style="position:sticky;top:10px">
-  <p class="price">${t.price} € <small style="font-weight:400">на час</small></p>
-  <p>Формат: ${t.formats.map(f=>FORMATS[f]).join(", ")}<br>Отговаря обикновено до ${t.respHours} ч.<br>Класове: ${classLabel(t.ageFrom)} – ${classLabel(t.ageTo)}</p>
-  <table class="sched"><caption class="sr">Свободни часове</caption><tbody>${dayrow}</tbody></table>
-  <p style="margin-top:1rem"><a class="btn yellow" href="contact.html?id=${t.id}">Изпрати заявка за пробен урок</a></p>
-  <p class="hint">Не показваме телефон и имейл. Първо се свързвате през платформата.</p>
-</div></aside></div>
-<div class="next"><a class="btn alt" href="results.html">Към предложенията</a> <a class="btn alt" href="questionnaire.html">Получи персонални предложения</a></div>`;
+<div class="grid c2" style="margin-top:1.6rem;grid-template-columns:minmax(0,1fr) 320px">
+  <div>
+    <h2>За мен</h2><p>${esc(t.bio)}</p>
+    <h2>Нещо, което е хубаво да знаеш за мен</h2><p>${esc(t.about)}</p>
+    <h2>Образование и опит</h2>
+    <ul>
+      <li><strong>Образование:</strong> ${esc(t.edu)}</li>
+      <li><strong>Досега работя като:</strong> ${esc(t.work)}</li>
+      <li><strong>Любимо хоби:</strong> ${esc(t.interests[0])}</li>
+    </ul>
+    <h2>Опит с потребности</h2><ul>${need||"<li>Още няма посочен опит.</li>"}</ul>
+    <h2>Опит по възрастови групи</h2><ul>${age}</ul>
+  </div>
+  <aside class="card white" style="position:sticky;top:10px;align-self:start">
+    <p class="price">${t.price} € <small>на час</small></p>
+    <p>Формат: ${t.formats.map(f=>esc(FORMATS[f])).join(", ")}<br>Класове: ${esc(classLabel(t.ageFrom))} – ${esc(classLabel(t.ageTo))}</p>
+    <table class="sched"><caption class="sr">Удобни часове</caption><tbody>${dayrow}</tbody></table>
+    <p style="margin-top:1rem"><a class="btn" href="contact.html?id=${t.id}">Изпрати заявка за пробен урок</a></p>
+    <p class="hint">Телефонът и имейлът не се показват. Първо пишете през платформата.</p>
+  </aside>
+</div>
+<div class="next btn-row"><a class="btn alt" href="results.html">Към всички педагози</a></div>`;
 </script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Запазени педагози – Sientica Nest</title>
+<link rel="icon" href="img/favicon.png" type="image/png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main id="main" class="wrap">
+  <h1>Запазени педагози</h1>
+  <p id="note"></p>
+  <p class="countline" id="count" aria-live="polite"></p>
+  <div id="out" class="catgrid"></div>
+  <p class="next"><a href="results.html">Към всички педагози</a></p>
+</main>
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script>
+const ids=saved();
+const q=role()==="parent"?qData():null;
+note.innerHTML=role()==="visitor"?'<span class="notice demo" style="display:inline-block;margin:0">Влезте, за да не ги загубите. Тези са запазени само в този браузър и в тази сесия.</span>':"";
+const L=TEACHERS.filter(t=>ids.includes(t.id));
+count.textContent=L.length?`Запазени: ${L.length}`:"Още нямате запазени педагози.";
+out.innerHTML=L.length?L.map(t=>teacherCard(t,{q})).join(""):'<div class="card"><p>Запазете педагог с бутона „Запази“ на картата му.</p><p><a class="btn" href="results.html">Намери педагог</a></p></div>';
+</script>
+</body>
+</html>
