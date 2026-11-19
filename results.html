@@ -73,7 +73,7 @@ function list(){
 function draw(){
   const L=list();
   count.textContent=L.length?`Намерени педагози: ${L.length} от ${TEACHERS.length}`:"Няма педагози с тези филтри";
-  out.innerHTML=L.length?L.map(({t,q})=>teacherCard(t,{q:q||null})).join(""):'<div class="card"><p>Няма педагози с тези филтри. Опитайте с по-малко филтри или с онлайн формат.</p><p><button class="btn alt" type="button" onclick="reset.click()">Изчисти филтрите</button></p></div>';
+  out.innerHTML=L.length?L.map(({t,q})=>teacherCard(t,{q:q||null})).join(""):'<div class="card"><p>Няма педагози с тези избори. Пробвайте с по-малко филтри или с онлайн формат.</p><p><button class="btn alt" type="button" onclick="reset.click()">Изчисти филтрите</button></p></div>';
 }
 document.getElementById("search").addEventListener("input",draw);
 document.getElementById("search").addEventListener("change",draw);

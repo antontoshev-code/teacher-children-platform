@@ -25,16 +25,16 @@ function unreadCount(){
   const r=role();
   const page=location.pathname.split("/").pop()||"index.html";
   const cur=h=>h===page?' aria-current="page"':"";
-  const navLinks=[["index.html#how","Как работи","index.html"],["results.html","Намери педагог","results.html"],["teacher-register.html","За педагози","teacher-register.html"]];
+  const navLinks=[["index.html#how","Как работи","index.html"],["results.html","Намери педагог","results.html"],["za-pedagozi.html","За педагози","za-pedagozi.html"]];
   const nav=navLinks.map(([h,t,p])=>`<li><a href="${h}"${cur(p)}>${t}</a></li>`).join("");
   let actions="";
   if(r==="visitor"){
-    actions=`<a class="pill ghost" href="login.html">Вход</a><a class="pill yellow" href="signup-family.html">Регистрация</a>`;
+    actions=`<a class="pill text" href="login.html">Вход</a><a class="pill ghost" href="signup-family.html">Регистрация</a><a class="pill yellow" href="results.html">Намери педагог</a>`;
   }else{
     const un=unreadCount();
     actions=`${r==="parent"?`<a class="pill ghost" href="saved.html">Запазени (${saved().length})</a>`:`<a class="pill ghost" href="teacher-dashboard.html">Табло</a>`}
       <a class="pill ghost" href="inbox.html">Съобщения${un?` <span class="badge" aria-label="${un} непрочетени">${un}</span>`:""}</a>
-      <button class="pill yellow" type="button" id="logout">Изход</button>`;
+      <button class="pill text" type="button" id="logout">Изход</button>`;
   }
   const bar=`<div class="demo-bar"><div class="wrap">
     <label class="role-pick">Разглеждате като <select id="role" aria-label="Разглеждате като">${Object.entries(ROLES).map(([k,v])=>`<option value="${k}"${k===r?" selected":""}>${v}</option>`).join("")}</select></label></div></div>`;
@@ -47,7 +47,7 @@ function unreadCount(){
     <button type="button" id="hc" aria-pressed="false">Висок контраст</button>
   </div></div>
   <header class="site"><div class="wrap head">
-    <a class="logo" href="index.html"><img src="img/logo.webp" alt="Sientica Nest" width="44" height="44"></a>
+    <a class="logo" href="index.html"><img src="img/logo.webp" alt="Sientica Nest" width="320" height="256"></a>
     <nav class="main" aria-label="Основно меню"><ul>${nav}</ul></nav>
     <div class="acts">${actions}</div>
   </div></header>`;
@@ -77,9 +77,9 @@ function unreadCount(){
       <div><h2 class="foot-h">Педагози по град</h2><p>${cityLinks}</p></div>
     </div>
     <p>Данните се пазят на сървър в България и се показват само на избрания от вас педагог, след вашето съгласие. <a href="privacy.html">Как пазим данните</a></p>
-    <p class="demo-line">Примерен сайт с измислени данни.</p>
+    <p class="demo-line">Това е примерен сайт с измислени данни.</p>
     <p>Платформата подрежда предложения по профили. Тя не гарантира, че даден педагог е подходящ за вашето дете. Първият урок е пробен.</p>
-    <p><a href="index.html">Начало</a> · <a href="results.html">Намери педагог</a> · <a href="teacher-register.html">За педагози</a> · <a href="login.html">Вход</a> · <a href="feedback.html">Обратна връзка</a> · <a href="terms.html">Условия за ползване</a> · <a href="privacy.html">Поверителност</a></p>
+    <p><a href="index.html">Начало</a> · <a href="results.html">Намери педагог</a> · <a href="za-pedagozi.html">За педагози</a> · <a href="login.html">Вход</a> · <a href="feedback.html">Обратна връзка</a> · <a href="terms.html">Условия за ползване</a> · <a href="privacy.html">Поверителност</a></p>
   </div></footer>`);
 })();
 
@@ -111,7 +111,7 @@ function teacherCard(t,opts){
       <p class="chips">${matchChips}</p>
       <p class="bio">${esc(t.bio)}</p>
       <p class="pfoot"><span class="price">${t.price} € <small>на час</small></span></p>
-      <p class="btn-row"><a class="btn" href="teacher.html?id=${t.id}">Виж профила</a><a class="btn alt" href="contact.html?id=${t.id}">Изпрати заявка за пробен урок</a></p>
+      <p class="btn-row"><a class="btn alt" href="teacher.html?id=${t.id}">Виж профила</a><a class="btn" href="contact.html?id=${t.id}">Изпрати заявка</a></p>
     </div>
   </article>`;
 }

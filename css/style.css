@@ -54,9 +54,10 @@ a:hover{color:var(--brown)}
 
 /* Плаваща навигация-таблетка (villagekare) */
 header.site{padding:14px 0 6px;position:relative;z-index:5}
-header.site .head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;background:var(--surface);border-radius:999px;box-shadow:0 8px 24px rgba(66,44,24,.12);padding:.35rem .5rem .35rem .6rem;max-width:1140px}
+header.site .head{display:flex;align-items:center;justify-content:space-between;gap:.8rem;flex-wrap:wrap;background:var(--surface);border-radius:999px;box-shadow:0 8px 24px rgba(66,44,24,.12);padding:.2rem .6rem .2rem .3rem;max-width:1140px;min-height:104px}
 .logo{display:inline-flex;padding:.2rem .4rem}
-.logo img{display:block;width:60px;height:60px;object-fit:contain}
+.logo img{display:block;height:88px;width:auto}
+.pill.text{background:transparent;border-color:transparent;color:var(--brown);text-decoration:underline;text-underline-offset:4px}
 nav.main ul{list-style:none;display:flex;gap:.1rem;margin:0;padding:0;flex-wrap:wrap}
 nav.main a{display:block;padding:.5rem .9rem;border-radius:999px;color:var(--ink);text-decoration:none;min-height:44px;font-weight:600;line-height:1.9}
 nav.main a:hover{background:var(--chip);text-decoration:underline}
@@ -101,6 +102,7 @@ details.faq[open]{border-color:var(--amber)}
 details.faq summary{cursor:pointer;font-weight:700;padding:.8rem 0;min-height:44px;list-style:none;display:flex;justify-content:space-between;gap:1rem;color:var(--brown)}
 details.faq summary::after{content:"▾";font-size:1.2rem}
 details.faq[open] summary::after{content:"▴"}
+.photo-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
 .round-photo{width:140px;height:140px;border-radius:50%;object-fit:cover;display:block;border:4px solid #fff;box-shadow:0 4px 14px rgba(66,44,24,.14);background:var(--chip)}
 .round-photo.initials{display:flex;align-items:center;justify-content:center;font-family:var(--font);font-size:2.6rem;font-weight:800;color:var(--brown);background:#f5b82e}
 .draft{border:2px dashed #b8741d;background:var(--warn-bg);padding:.8rem 1rem;border-radius:16px;color:var(--warn)}
@@ -140,7 +142,8 @@ details.faq[open] summary::after{content:"▴"}
 
 /* Профил */
 .profile-head{display:grid;grid-template-columns:220px 1fr;gap:1.5rem;align-items:center}
-.profile-head .round-photo{width:220px;height:220px}
+.profile-head .photo-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.round-photo{width:220px;height:220px}
 .profile-head .round-photo.initials{font-size:4.5rem}
 .rate.big{font-size:1.2rem}
 @media(max-width:700px){.profile-head{grid-template-columns:1fr;justify-items:center;text-align:center}}
@@ -200,6 +203,7 @@ table.sched th,table.sched td{border:1px solid var(--line);padding:.45rem .7rem;
   header.site .head{border-radius:24px}
   .pill{padding:.4rem .75rem;font-size:.95rem}
   nav.main a{padding:.4rem .6rem}
+  .logo img{height:56px}
 }
 
 /* Тънка лента за ролята и две кратки защитни реда */

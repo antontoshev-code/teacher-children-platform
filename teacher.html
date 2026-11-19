@@ -42,8 +42,8 @@ box.innerHTML=`
     <p class="muted" style="font-size:.95rem;margin:0">Примерен профил (измислен за демото).</p>
     ${matchLine}
     <div class="btn-row">
-      <a class="btn" href="contact.html?id=${t.id}">Изпрати заявка за пробен урок</a>
       <button type="button" class="save${saved().includes(t.id)?" on":""}" data-save="${t.id}" aria-pressed="${saved().includes(t.id)}">${saved().includes(t.id)?"Запазен":"Запази"}</button>
+      <a class="btn" href="contact.html?id=${t.id}">Изпрати заявка</a>
     </div>
   </div>
 </div>
@@ -54,7 +54,6 @@ box.innerHTML=`
     <h2>Образование и опит</h2>
     <ul>
       <li><strong>Образование:</strong> ${esc(t.edu)}</li>
-      <li><strong>Досега работя като:</strong> ${esc(t.work)}</li>
       <li><strong>Любимо хоби:</strong> ${esc(t.interests[0])}</li>
     </ul>
     <h2>Опит с потребности</h2><ul>${need||"<li>Още няма посочен опит.</li>"}</ul>
@@ -64,7 +63,7 @@ box.innerHTML=`
     <p class="price">${t.price} € <small>на час</small></p>
     <p>Формат: ${t.formats.map(f=>esc(FORMATS[f])).join(", ")}<br>Класове: ${esc(classLabel(t.ageFrom))} – ${esc(classLabel(t.ageTo))}</p>
     <table class="sched"><caption class="sr">Удобни часове</caption><tbody>${dayrow}</tbody></table>
-    <p style="margin-top:1rem"><a class="btn" href="contact.html?id=${t.id}">Изпрати заявка за пробен урок</a></p>
+    <p style="margin-top:1rem"><a class="btn" href="contact.html?id=${t.id}">Изпрати заявка</a></p>
     <p class="hint">Телефонът и имейлът не се показват. Първо пишете през платформата.</p>
   </aside>
 </div>
