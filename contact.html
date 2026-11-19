@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Заявка за пробен урок – Слънчев мост</title>
+<title>Заявка за пробен урок – Sientica Nest</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,6 +17,7 @@
       <div id="errsum" class="notice" role="alert" tabindex="-1" hidden></div>
       <div class="field"><label for="nm">Вашето име</label><input id="nm" type="text" autocomplete="name"></div>
       <div class="field"><label for="em">Имейл за отговор</label><p class="hint">Педагогът няма да види имейла ви, докато не отговорите.</p><input id="em" type="email" autocomplete="email"></div>
+      <div class="field"><label for="pref">Предпочитан ден и час (с думи, без календар)</label><p class="hint">Например: вторник след 17:00. Педагогът потвърждава с имейл.</p><input id="pref" type="text"></div>
       <div class="field"><label for="msg">Съобщение (по желание)</label><p class="hint">Например кога ви е удобно или какво е важно за детето.</p><textarea id="msg"></textarea></div>
 
       <div class="notice privacy"><h2 style="font-size:1.2rem">Споделяне на информация за детето</h2>
@@ -32,7 +33,7 @@
   <div id="done" hidden>
     <h1>Заявката е изпратена</h1>
     <div class="notice" role="status"><p><strong id="who2"></strong> ще получи заявката ви и обикновено отговаря до <span id="resp"></span> часа. Ще ви пишем на посочения имейл.</p>
-    <p>Съгласието е записано: <time id="ts"></time>.</p></div>
+    <p>Съгласието е дадено сега. В демото нищо не се записва: <time id="ts"></time>.</p></div>
     <h2>Какво следва</h2>
     <ol><li>Педагогът отговаря с предложение за час.</li><li>Вие правите пробен урок.</li><li>След урока можете да оставите отзив.</li></ol>
     <p class="hint">В прототипа нищо не е изпратено наистина.</p>

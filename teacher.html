@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Профил на педагог – Слънчев мост</title>
+<title>Профил на педагог – Sientica Nest</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,7 +17,7 @@
 const id=+new URLSearchParams(location.search).get("id")||1;
 const t=TEACHERS.find(x=>x.id===id)||TEACHERS[0];
 document.getElementById("cn").textContent=t.name;
-document.title=t.name+" – профил – Слънчев мост";
+document.title=t.name+" – профил – Sientica Nest";
 const need=Object.entries(t.exp).filter(([k,v])=>v>0).map(([k,v])=>`<li>${NEEDS[k]}: ${v} ${v==1?"година":"години"} опит</li>`).join("");
 const age=Object.entries(t.ageExp).map(([k,v])=>`<li>${bandLabel[k]}: ${v} ${v==1?"година":"години"}</li>`).join("");
 const dayrow=Object.entries(TIMES).map(([k,v])=>`<tr><th scope="row">${v}</th><td>${t.times.includes(k)?"Свободен":"Не"}</td></tr>`).join("");
@@ -35,8 +35,6 @@ document.getElementById("box").innerHTML=`
   <h2>Опит с потребности</h2><ul>${need||"<li>Още няма посочен опит.</li>"}</ul>
   <h2>Опит по възрастови групи</h2><ul>${age}</ul>
   <h2>Обучения и квалификация</h2><ul>${t.training.map(x=>`<li>${x}</li>`).join("")}</ul>
-  <h2>Отзиви</h2>
-  ${t.reviews?`<blockquote class="card" style="margin:0 0 1rem"><em>Пример за отзив: „Синът ни вече очаква уроците. Всичко е с ясен план.“</em><br><small>Родител, отзивът е примерен</small></blockquote>`:"<p>Още няма отзиви. След първия пробен урок родителите могат да оставят отзив.</p>"}
 </div>
 <aside><div class="card" style="position:sticky;top:10px">
   <p class="price">${t.price} € <small style="font-weight:400">на час</small></p>

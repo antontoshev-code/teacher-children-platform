@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Предложения за вас – Слънчев мост</title>
+<title>Предложения за вас – Sientica Nest</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -33,7 +33,7 @@ if(!qd){ // демонстрация без въпросник
   sum.innerHTML='<p class="notice">Показан е пример: български език, 2. клас, синдром на Даун, всякакъв формат, Благоевград, делнични следобеди. <a href="questionnaire.html">Попълнете вашия въпросник</a>.</p>';
 }
 const r=runMatch(qd), n=r.top.length;
-sum.innerHTML+=`<p>${qd.city} · ${SUBJECTS[qd.subject]} · ${classLabel(qd.cls)} · до ${qd.budget} € на час. От ${TEACHERS.length} педагози ${n?`<strong>${r.kept.length}</strong> са подходящи по основните условия.`:"няма подходящи по основните условия."}</p>`;
+sum.innerHTML+=`<p>${esc(qd.city)} · ${SUBJECTS[qd.subject]} · ${classLabel(qd.cls)} · до ${esc(String(qd.budget))} € на час. От ${TEACHERS.length} педагози ${n?`<strong>${r.kept.length}</strong> са подходящи по основните условия.`:"няма подходящи по основните условия."}</p>`;
 if(!n) list.innerHTML='<div class="card"><h2>Все още няма точно съвпадение</h2><p>Опитайте с повече удобни часове или с избор „Все едно“ за формата. Можете и да разгледате целия каталог, а екипът може да ви помогне ръчно.</p></div>';
 else if(n<3) sum.innerHTML+=`<p class="notice">Намерихме само ${n} ${n==1?"педагог":"педагози"}. Не показваме неподходящи, за да допълним списъка.</p>`;
 let mark={};try{mark=JSON.parse(sessionStorage.getItem("mark")||"{}");}catch(e){}

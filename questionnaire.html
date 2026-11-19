@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Въпросник за родители – Слънчев мост</title>
+<title>Въпросник за родители – Sientica Nest</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -95,7 +95,7 @@ function show(n){
   document.getElementById("errsum").hidden=true;
   const h=steps[n-1].querySelector("h1");h.focus();window.scrollTo(0,0);
 }
-function vals(){return {city:city.value,subject:subject.value,cls:cls.value===""?null:+cls.value,need:q.need.value,format:q.format.value,budget:+budget.value||25,times:[...document.querySelectorAll("[name=times]:checked")].map(x=>x.value),support:[...document.querySelectorAll("[name=support]:checked")].map(x=>x.value)};}
+function vals(){return {city:city.value,subject:subject.value,cls:cls.value===""?null:+cls.value,need:q.need.value,format:q.format.value,budget:+budget.value,times:[...document.querySelectorAll("[name=times]:checked")].map(x=>x.value),support:[...document.querySelectorAll("[name=support]:checked")].map(x=>x.value)};}
 function buildReview(){
   const v=vals();
   review.innerHTML=`<h2 style="font-size:1.2rem">Вашите отговори</h2><ul><li>Град: ${v.city}</li><li>Предмет: ${SUBJECTS[v.subject]}</li><li>Клас: ${classLabel(v.cls)}</li><li>Формат: ${{presential:"присъствено",online:"онлайн",any:"все едно"}[v.format]}</li><li>Часове: ${v.times.map(t=>TIMES[t].toLowerCase()).join(", ")}</li><li>Бюджет: до ${v.budget} € на час</li><li>Потребност: ${NEEDS[v.need]}</li><li>Какво помага: ${v.support.length?v.support.map(s=>SUPPORT[s].replace(/ \(.*\)/,"")).join(", "):"не е посочено"}</li></ul>`;
@@ -104,6 +104,7 @@ function validate(n){
   const v=vals(),e=[];
   if(n===1){if(!v.city)e.push(["city","Изберете град."]);if(!v.subject)e.push(["subject","Изберете предмет."]);if(v.cls===null)e.push(["cls","Изберете клас."]);}
   if(n===2&&!v.times.length)e.push(["times","Изберете поне един удобен час."]);
+  if(n===2&&!/^\d+$/.test(budget.value.trim())||n===2&&(+budget.value<5||+budget.value>100))e.push(["budget","Въведете бюджет между 5 и 100 евро на час."]);
   if(n===4&&!consent.checked)e.push(["consent","Нужно е съгласие, за да продължим."]);
   return e;
 }
